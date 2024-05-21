@@ -1,0 +1,1925 @@
+#
+# TABLE STRUCTURE FOR: sma_addresses
+#
+
+DROP TABLE IF EXISTS `sma_addresses`;
+
+CREATE TABLE `sma_addresses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `line1` varchar(50) NOT NULL,
+  `line2` varchar(50) DEFAULT NULL,
+  `city` varchar(25) NOT NULL,
+  `postal_code` varchar(20) DEFAULT NULL,
+  `state` varchar(25) NOT NULL,
+  `country` varchar(50) NOT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `company_id` (`company_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_adjustment_items
+#
+
+DROP TABLE IF EXISTS `sma_adjustment_items`;
+
+CREATE TABLE `sma_adjustment_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `option_id` int(11) DEFAULT NULL,
+  `quantity` decimal(15,4) NOT NULL,
+  `warehouse_id` int(11) NOT NULL,
+  `serial_no` varchar(255) DEFAULT NULL,
+  `type` varchar(20) NOT NULL,
+  `adjustment_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `adjustment_id` (`adjustment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_adjustment_items` (`id`, `product_id`, `option_id`, `quantity`, `warehouse_id`, `serial_no`, `type`, `adjustment_id`) VALUES ('1', '1', NULL, '12.0000', '2', '', 'subtraction', '1');
+
+
+#
+# TABLE STRUCTURE FOR: sma_adjustments
+#
+
+DROP TABLE IF EXISTS `sma_adjustments`;
+
+CREATE TABLE `sma_adjustments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `reference_no` varchar(55) NOT NULL,
+  `warehouse_id` int(11) NOT NULL,
+  `note` text,
+  `attachment` varchar(55) DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `count_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `warehouse_id` (`warehouse_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_adjustments` (`id`, `date`, `reference_no`, `warehouse_id`, `note`, `attachment`, `created_by`, `updated_by`, `updated_at`, `count_id`) VALUES ('1', '2017-05-25 17:17:00', '2017/05/0001', '2', '', NULL, '1', NULL, NULL, NULL);
+
+
+#
+# TABLE STRUCTURE FOR: sma_brands
+#
+
+DROP TABLE IF EXISTS `sma_brands`;
+
+CREATE TABLE `sma_brands` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  `image` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_brands` (`id`, `code`, `name`, `image`) VALUES ('1', 'Origin', 'origin', NULL);
+
+
+#
+# TABLE STRUCTURE FOR: sma_calendar
+#
+
+DROP TABLE IF EXISTS `sma_calendar`;
+
+CREATE TABLE `sma_calendar` (
+  `start` datetime NOT NULL,
+  `title` varchar(55) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `end` datetime DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `color` varchar(7) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_captcha
+#
+
+DROP TABLE IF EXISTS `sma_captcha`;
+
+CREATE TABLE `sma_captcha` (
+  `captcha_id` bigint(13) unsigned NOT NULL AUTO_INCREMENT,
+  `captcha_time` int(10) unsigned NOT NULL,
+  `ip_address` varchar(16) CHARACTER SET latin1 NOT NULL DEFAULT '0',
+  `word` varchar(20) CHARACTER SET latin1 NOT NULL,
+  PRIMARY KEY (`captcha_id`),
+  KEY `word` (`word`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_categories
+#
+
+DROP TABLE IF EXISTS `sma_categories`;
+
+CREATE TABLE `sma_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(55) NOT NULL,
+  `name` varchar(55) NOT NULL,
+  `image` varchar(55) DEFAULT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_categories` (`id`, `code`, `name`, `image`, `parent_id`) VALUES ('1', 'C1', 'Category 1', NULL, NULL);
+
+
+#
+# TABLE STRUCTURE FOR: sma_combo_items
+#
+
+DROP TABLE IF EXISTS `sma_combo_items`;
+
+CREATE TABLE `sma_combo_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `item_code` varchar(20) NOT NULL,
+  `quantity` decimal(12,4) NOT NULL,
+  `unit_price` decimal(25,4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_companies
+#
+
+DROP TABLE IF EXISTS `sma_companies`;
+
+CREATE TABLE `sma_companies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(10) unsigned DEFAULT NULL,
+  `group_name` varchar(20) NOT NULL,
+  `customer_group_id` int(11) DEFAULT NULL,
+  `customer_group_name` varchar(100) DEFAULT NULL,
+  `name` varchar(55) NOT NULL,
+  `company` varchar(255) NOT NULL,
+  `vat_no` varchar(100) DEFAULT NULL,
+  `address` varchar(255) NOT NULL,
+  `city` varchar(55) NOT NULL,
+  `state` varchar(55) DEFAULT NULL,
+  `postal_code` varchar(8) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `cf1` varchar(100) DEFAULT NULL,
+  `cf2` varchar(100) DEFAULT NULL,
+  `cf3` varchar(100) DEFAULT NULL,
+  `cf4` varchar(100) DEFAULT NULL,
+  `cf5` varchar(100) DEFAULT NULL,
+  `cf6` varchar(100) DEFAULT NULL,
+  `invoice_footer` text,
+  `payment_term` int(11) DEFAULT '0',
+  `logo` varchar(255) DEFAULT 'logo.png',
+  `award_points` int(11) DEFAULT '0',
+  `deposit_amount` decimal(25,4) DEFAULT NULL,
+  `price_group_id` int(11) DEFAULT NULL,
+  `price_group_name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `group_id` (`group_id`),
+  KEY `group_id_2` (`group_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_companies` (`id`, `group_id`, `group_name`, `customer_group_id`, `customer_group_name`, `name`, `company`, `vat_no`, `address`, `city`, `state`, `postal_code`, `country`, `phone`, `email`, `cf1`, `cf2`, `cf3`, `cf4`, `cf5`, `cf6`, `invoice_footer`, `payment_term`, `logo`, `award_points`, `deposit_amount`, `price_group_id`, `price_group_name`) VALUES ('1', '3', 'customer', '1', 'General', 'Walk-in Customer', 'Walk-in Customer', '', 'Customer Address', 'Jhang', 'Punjab', '46000', 'Pakistan', '0123456789', 'imran@imran.xyz', '', '', '', '', '', '', NULL, '0', 'logo.png', '0', NULL, NULL, NULL);
+INSERT INTO `sma_companies` (`id`, `group_id`, `group_name`, `customer_group_id`, `customer_group_name`, `name`, `company`, `vat_no`, `address`, `city`, `state`, `postal_code`, `country`, `phone`, `email`, `cf1`, `cf2`, `cf3`, `cf4`, `cf5`, `cf6`, `invoice_footer`, `payment_term`, `logo`, `award_points`, `deposit_amount`, `price_group_id`, `price_group_name`) VALUES ('2', '4', 'supplier', NULL, NULL, 'MUHAMMAD IMRAN', 'I-Soft Solutions', '', 'I Soft Solutions, Jail Road Opposite High way office Jhang', 'Jhang', 'Punjab', '35200', 'United Kingdom', '3006519990', 'isoft_isoft@yahoo.com', '-', '-', '-', '3006519990', '-', '-', NULL, '0', 'logo.png', '0', NULL, NULL, NULL);
+INSERT INTO `sma_companies` (`id`, `group_id`, `group_name`, `customer_group_id`, `customer_group_name`, `name`, `company`, `vat_no`, `address`, `city`, `state`, `postal_code`, `country`, `phone`, `email`, `cf1`, `cf2`, `cf3`, `cf4`, `cf5`, `cf6`, `invoice_footer`, `payment_term`, `logo`, `award_points`, `deposit_amount`, `price_group_id`, `price_group_name`) VALUES ('3', NULL, 'biller', NULL, NULL, 'Origins', 'Ali Center Jhang', '', 'Church road Jhang', 'Jhang', '', '', 'Pakistan', '012345678', 'origins@imran.xyz', '', '', '', '', '', '', ' Thank you for shopping with us. Please come again', '0', 'ali_center.png', '0', NULL, NULL, NULL);
+
+
+#
+# TABLE STRUCTURE FOR: sma_costing
+#
+
+DROP TABLE IF EXISTS `sma_costing`;
+
+CREATE TABLE `sma_costing` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `sale_item_id` int(11) NOT NULL,
+  `sale_id` int(11) DEFAULT NULL,
+  `purchase_item_id` int(11) DEFAULT NULL,
+  `quantity` decimal(15,4) NOT NULL,
+  `purchase_net_unit_cost` decimal(25,4) DEFAULT NULL,
+  `purchase_unit_cost` decimal(25,4) DEFAULT NULL,
+  `sale_net_unit_price` decimal(25,4) NOT NULL,
+  `sale_unit_price` decimal(25,4) NOT NULL,
+  `quantity_balance` decimal(15,4) DEFAULT NULL,
+  `inventory` tinyint(1) DEFAULT '0',
+  `overselling` tinyint(1) DEFAULT '0',
+  `option_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_costing` (`id`, `date`, `product_id`, `sale_item_id`, `sale_id`, `purchase_item_id`, `quantity`, `purchase_net_unit_cost`, `purchase_unit_cost`, `sale_net_unit_price`, `sale_unit_price`, `quantity_balance`, `inventory`, `overselling`, `option_id`) VALUES ('1', '2017-04-25', '1', '1', '1', '1', '5.0000', '800.0000', '800.0000', '900.0000', '900.0000', '25.0000', '1', '0', '0');
+INSERT INTO `sma_costing` (`id`, `date`, `product_id`, `sale_item_id`, `sale_id`, `purchase_item_id`, `quantity`, `purchase_net_unit_cost`, `purchase_unit_cost`, `sale_net_unit_price`, `sale_unit_price`, `quantity_balance`, `inventory`, `overselling`, `option_id`) VALUES ('2', '2017-04-25', '1', '2', '2', '1', '1.0000', '800.0000', '800.0000', '900.0000', '900.0000', '24.0000', '1', '0', '0');
+INSERT INTO `sma_costing` (`id`, `date`, `product_id`, `sale_item_id`, `sale_id`, `purchase_item_id`, `quantity`, `purchase_net_unit_cost`, `purchase_unit_cost`, `sale_net_unit_price`, `sale_unit_price`, `quantity_balance`, `inventory`, `overselling`, `option_id`) VALUES ('3', '2017-04-25', '1', '3', '3', '1', '3.0000', '800.0000', '800.0000', '900.0000', '900.0000', '21.0000', '1', '0', '0');
+INSERT INTO `sma_costing` (`id`, `date`, `product_id`, `sale_item_id`, `sale_id`, `purchase_item_id`, `quantity`, `purchase_net_unit_cost`, `purchase_unit_cost`, `sale_net_unit_price`, `sale_unit_price`, `quantity_balance`, `inventory`, `overselling`, `option_id`) VALUES ('4', '2017-04-26', '1', '4', '4', '1', '1.0000', '800.0000', '800.0000', '900.0000', '900.0000', '20.0000', '1', '0', '0');
+INSERT INTO `sma_costing` (`id`, `date`, `product_id`, `sale_item_id`, `sale_id`, `purchase_item_id`, `quantity`, `purchase_net_unit_cost`, `purchase_unit_cost`, `sale_net_unit_price`, `sale_unit_price`, `quantity_balance`, `inventory`, `overselling`, `option_id`) VALUES ('5', '2017-04-29', '1', '5', '5', '1', '1.0000', '800.0000', '800.0000', '900.0000', '900.0000', '19.0000', '1', '0', NULL);
+INSERT INTO `sma_costing` (`id`, `date`, `product_id`, `sale_item_id`, `sale_id`, `purchase_item_id`, `quantity`, `purchase_net_unit_cost`, `purchase_unit_cost`, `sale_net_unit_price`, `sale_unit_price`, `quantity_balance`, `inventory`, `overselling`, `option_id`) VALUES ('6', '2017-05-06', '1', '6', '6', '1', '1.0000', '800.0000', '800.0000', '900.0000', '900.0000', '18.0000', '1', '0', '0');
+INSERT INTO `sma_costing` (`id`, `date`, `product_id`, `sale_item_id`, `sale_id`, `purchase_item_id`, `quantity`, `purchase_net_unit_cost`, `purchase_unit_cost`, `sale_net_unit_price`, `sale_unit_price`, `quantity_balance`, `inventory`, `overselling`, `option_id`) VALUES ('7', '2017-05-25', '1', '7', '7', '1', '1.5000', '800.0000', '800.0000', '600.0000', '600.0000', '16.5000', '1', '0', NULL);
+INSERT INTO `sma_costing` (`id`, `date`, `product_id`, `sale_item_id`, `sale_id`, `purchase_item_id`, `quantity`, `purchase_net_unit_cost`, `purchase_unit_cost`, `sale_net_unit_price`, `sale_unit_price`, `quantity_balance`, `inventory`, `overselling`, `option_id`) VALUES ('8', '2017-05-25', '1', '8', '8', '1', '1.0000', '800.0000', '800.0000', '600.0000', '600.0000', '15.5000', '1', '0', NULL);
+
+
+#
+# TABLE STRUCTURE FOR: sma_currencies
+#
+
+DROP TABLE IF EXISTS `sma_currencies`;
+
+CREATE TABLE `sma_currencies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(5) NOT NULL,
+  `name` varchar(55) NOT NULL,
+  `rate` decimal(12,4) NOT NULL,
+  `auto_update` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_currencies` (`id`, `code`, `name`, `rate`, `auto_update`) VALUES ('2', 'PKR', 'Pakistani Rupees ', '0.0000', '0');
+
+
+#
+# TABLE STRUCTURE FOR: sma_customer_groups
+#
+
+DROP TABLE IF EXISTS `sma_customer_groups`;
+
+CREATE TABLE `sma_customer_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `percent` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_customer_groups` (`id`, `name`, `percent`) VALUES ('1', 'General', '0');
+INSERT INTO `sma_customer_groups` (`id`, `name`, `percent`) VALUES ('2', 'Reseller', '-5');
+INSERT INTO `sma_customer_groups` (`id`, `name`, `percent`) VALUES ('3', 'Distributor', '-15');
+INSERT INTO `sma_customer_groups` (`id`, `name`, `percent`) VALUES ('4', 'New Customer (+10)', '10');
+
+
+#
+# TABLE STRUCTURE FOR: sma_date_format
+#
+
+DROP TABLE IF EXISTS `sma_date_format`;
+
+CREATE TABLE `sma_date_format` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `js` varchar(20) NOT NULL,
+  `php` varchar(20) NOT NULL,
+  `sql` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_date_format` (`id`, `js`, `php`, `sql`) VALUES ('1', 'mm-dd-yyyy', 'm-d-Y', '%m-%d-%Y');
+INSERT INTO `sma_date_format` (`id`, `js`, `php`, `sql`) VALUES ('2', 'mm/dd/yyyy', 'm/d/Y', '%m/%d/%Y');
+INSERT INTO `sma_date_format` (`id`, `js`, `php`, `sql`) VALUES ('3', 'mm.dd.yyyy', 'm.d.Y', '%m.%d.%Y');
+INSERT INTO `sma_date_format` (`id`, `js`, `php`, `sql`) VALUES ('4', 'dd-mm-yyyy', 'd-m-Y', '%d-%m-%Y');
+INSERT INTO `sma_date_format` (`id`, `js`, `php`, `sql`) VALUES ('5', 'dd/mm/yyyy', 'd/m/Y', '%d/%m/%Y');
+INSERT INTO `sma_date_format` (`id`, `js`, `php`, `sql`) VALUES ('6', 'dd.mm.yyyy', 'd.m.Y', '%d.%m.%Y');
+
+
+#
+# TABLE STRUCTURE FOR: sma_deliveries
+#
+
+DROP TABLE IF EXISTS `sma_deliveries`;
+
+CREATE TABLE `sma_deliveries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `sale_id` int(11) NOT NULL,
+  `do_reference_no` varchar(50) NOT NULL,
+  `sale_reference_no` varchar(50) NOT NULL,
+  `customer` varchar(55) NOT NULL,
+  `address` varchar(1000) NOT NULL,
+  `note` varchar(1000) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `status` varchar(15) DEFAULT NULL,
+  `attachment` varchar(50) DEFAULT NULL,
+  `delivered_by` varchar(50) DEFAULT NULL,
+  `received_by` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_deposits
+#
+
+DROP TABLE IF EXISTS `sma_deposits`;
+
+CREATE TABLE `sma_deposits` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `company_id` int(11) NOT NULL,
+  `amount` decimal(25,4) NOT NULL,
+  `paid_by` varchar(50) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_expense_categories
+#
+
+DROP TABLE IF EXISTS `sma_expense_categories`;
+
+CREATE TABLE `sma_expense_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(55) NOT NULL,
+  `name` varchar(55) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_expenses
+#
+
+DROP TABLE IF EXISTS `sma_expenses`;
+
+CREATE TABLE `sma_expenses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `reference` varchar(50) NOT NULL,
+  `amount` decimal(25,4) NOT NULL,
+  `note` varchar(1000) DEFAULT NULL,
+  `created_by` varchar(55) NOT NULL,
+  `attachment` varchar(55) DEFAULT NULL,
+  `warehouse_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_gift_card_topups
+#
+
+DROP TABLE IF EXISTS `sma_gift_card_topups`;
+
+CREATE TABLE `sma_gift_card_topups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `card_id` int(11) NOT NULL,
+  `amount` decimal(15,4) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `card_id` (`card_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_gift_cards
+#
+
+DROP TABLE IF EXISTS `sma_gift_cards`;
+
+CREATE TABLE `sma_gift_cards` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `card_no` varchar(20) NOT NULL,
+  `value` decimal(25,4) NOT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `customer` varchar(255) DEFAULT NULL,
+  `balance` decimal(25,4) NOT NULL,
+  `expiry` date DEFAULT NULL,
+  `created_by` varchar(55) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `card_no` (`card_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_groups
+#
+
+DROP TABLE IF EXISTS `sma_groups`;
+
+CREATE TABLE `sma_groups` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_groups` (`id`, `name`, `description`) VALUES ('1', 'owner', 'Owner');
+INSERT INTO `sma_groups` (`id`, `name`, `description`) VALUES ('2', 'admin', 'Administrator');
+INSERT INTO `sma_groups` (`id`, `name`, `description`) VALUES ('3', 'customer', 'Customer');
+INSERT INTO `sma_groups` (`id`, `name`, `description`) VALUES ('4', 'supplier', 'Supplier');
+INSERT INTO `sma_groups` (`id`, `name`, `description`) VALUES ('5', 'sales', 'Sales Staff');
+
+
+#
+# TABLE STRUCTURE FOR: sma_login_attempts
+#
+
+DROP TABLE IF EXISTS `sma_login_attempts`;
+
+CREATE TABLE `sma_login_attempts` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `ip_address` varbinary(16) NOT NULL,
+  `login` varchar(100) NOT NULL,
+  `time` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_login_attempts` (`id`, `ip_address`, `login`, `time`) VALUES ('1', '::1', 'owner@tecdiary.com', '1495692805');
+INSERT INTO `sma_login_attempts` (`id`, `ip_address`, `login`, `time`) VALUES ('2', '::1', 'owner@tecdiary.com', '1495693206');
+INSERT INTO `sma_login_attempts` (`id`, `ip_address`, `login`, `time`) VALUES ('3', '::1', 'owner@tecdiary.com', '1495693578');
+
+
+#
+# TABLE STRUCTURE FOR: sma_migrations
+#
+
+DROP TABLE IF EXISTS `sma_migrations`;
+
+CREATE TABLE `sma_migrations` (
+  `version` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_migrations` (`version`) VALUES ('316');
+
+
+#
+# TABLE STRUCTURE FOR: sma_notifications
+#
+
+DROP TABLE IF EXISTS `sma_notifications`;
+
+CREATE TABLE `sma_notifications` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `comment` text NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `from_date` datetime DEFAULT NULL,
+  `till_date` datetime DEFAULT NULL,
+  `scope` tinyint(1) NOT NULL DEFAULT '3',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_order_ref
+#
+
+DROP TABLE IF EXISTS `sma_order_ref`;
+
+CREATE TABLE `sma_order_ref` (
+  `ref_id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `so` int(11) NOT NULL DEFAULT '1',
+  `qu` int(11) NOT NULL DEFAULT '1',
+  `po` int(11) NOT NULL DEFAULT '1',
+  `to` int(11) NOT NULL DEFAULT '1',
+  `pos` int(11) NOT NULL DEFAULT '1',
+  `do` int(11) NOT NULL DEFAULT '1',
+  `pay` int(11) NOT NULL DEFAULT '1',
+  `re` int(11) NOT NULL DEFAULT '1',
+  `ex` int(11) NOT NULL DEFAULT '1',
+  `rep` int(11) NOT NULL DEFAULT '1',
+  `ppay` int(11) NOT NULL DEFAULT '1',
+  `qa` int(11) DEFAULT '1',
+  PRIMARY KEY (`ref_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_order_ref` (`ref_id`, `date`, `so`, `qu`, `po`, `to`, `pos`, `do`, `pay`, `re`, `ex`, `rep`, `ppay`, `qa`) VALUES ('1', '2017-05-01', '1', '1', '1', '1', '3', '1', '3', '1', '1', '1', '1', '2');
+
+
+#
+# TABLE STRUCTURE FOR: sma_payments
+#
+
+DROP TABLE IF EXISTS `sma_payments`;
+
+CREATE TABLE `sma_payments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `sale_id` int(11) DEFAULT NULL,
+  `return_id` int(11) DEFAULT NULL,
+  `purchase_id` int(11) DEFAULT NULL,
+  `reference_no` varchar(50) NOT NULL,
+  `transaction_id` varchar(50) DEFAULT NULL,
+  `paid_by` varchar(20) NOT NULL,
+  `cheque_no` varchar(20) DEFAULT NULL,
+  `cc_no` varchar(20) DEFAULT NULL,
+  `cc_holder` varchar(25) DEFAULT NULL,
+  `cc_month` varchar(2) DEFAULT NULL,
+  `cc_year` varchar(4) DEFAULT NULL,
+  `cc_type` varchar(20) DEFAULT NULL,
+  `amount` decimal(25,4) NOT NULL,
+  `currency` varchar(3) DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `attachment` varchar(55) DEFAULT NULL,
+  `type` varchar(20) NOT NULL,
+  `note` varchar(1000) DEFAULT NULL,
+  `pos_paid` decimal(25,4) DEFAULT '0.0000',
+  `pos_balance` decimal(25,4) DEFAULT '0.0000',
+  `approval_code` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_payments` (`id`, `date`, `sale_id`, `return_id`, `purchase_id`, `reference_no`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `type`, `note`, `pos_paid`, `pos_balance`, `approval_code`) VALUES ('1', '2017-04-25 15:54:13', '1', NULL, NULL, 'IPAY/2017/04/0001', NULL, 'cash', '', '', '', '', '', '', '4500.0000', NULL, '1', NULL, 'received', '', '4500.0000', '0.0000', NULL);
+INSERT INTO `sma_payments` (`id`, `date`, `sale_id`, `return_id`, `purchase_id`, `reference_no`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `type`, `note`, `pos_paid`, `pos_balance`, `approval_code`) VALUES ('2', '2017-04-25 15:57:46', '2', NULL, NULL, 'IPAY/2017/04/0003', NULL, 'cash', '', '', '', '', '', '', '900.0000', NULL, '1', NULL, 'received', '', '900.0000', '0.0000', NULL);
+INSERT INTO `sma_payments` (`id`, `date`, `sale_id`, `return_id`, `purchase_id`, `reference_no`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `type`, `note`, `pos_paid`, `pos_balance`, `approval_code`) VALUES ('3', '2017-04-25 18:55:15', '3', NULL, NULL, 'IPAY/2017/04/0005', NULL, 'cash', '', '', '', '', '', '', '2700.0000', NULL, '1', NULL, 'received', '', '2700.0000', '0.0000', NULL);
+INSERT INTO `sma_payments` (`id`, `date`, `sale_id`, `return_id`, `purchase_id`, `reference_no`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `type`, `note`, `pos_paid`, `pos_balance`, `approval_code`) VALUES ('4', '2017-04-26 08:19:45', '4', NULL, NULL, 'IPAY/2017/04/0007', NULL, 'cash', '', '', '', '', '', '', '900.0000', NULL, '1', NULL, 'received', '', '900.0000', '0.0000', NULL);
+INSERT INTO `sma_payments` (`id`, `date`, `sale_id`, `return_id`, `purchase_id`, `reference_no`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `type`, `note`, `pos_paid`, `pos_balance`, `approval_code`) VALUES ('5', '2017-04-29 14:00:45', '5', NULL, NULL, 'IPAY/2017/04/0009', NULL, 'cash', '', '', '', '', '', '', '900.0000', NULL, '1', NULL, 'received', '', '900.0000', '0.0000', NULL);
+INSERT INTO `sma_payments` (`id`, `date`, `sale_id`, `return_id`, `purchase_id`, `reference_no`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `type`, `note`, `pos_paid`, `pos_balance`, `approval_code`) VALUES ('6', '2017-05-06 17:38:45', '6', NULL, NULL, 'IPAY/2017/05/0011', NULL, 'cash', '', '', '', '', '', '', '900.0000', NULL, '1', NULL, 'received', '', '900.0000', '0.0000', NULL);
+INSERT INTO `sma_payments` (`id`, `date`, `sale_id`, `return_id`, `purchase_id`, `reference_no`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `type`, `note`, `pos_paid`, `pos_balance`, `approval_code`) VALUES ('7', '2017-05-25 17:11:13', '7', NULL, NULL, 'IPAY/2017/05/0001', NULL, 'cash', '', '', '', '', '', '', '900.0000', NULL, '1', NULL, 'received', '', '900.0000', '0.0000', NULL);
+INSERT INTO `sma_payments` (`id`, `date`, `sale_id`, `return_id`, `purchase_id`, `reference_no`, `transaction_id`, `paid_by`, `cheque_no`, `cc_no`, `cc_holder`, `cc_month`, `cc_year`, `cc_type`, `amount`, `currency`, `created_by`, `attachment`, `type`, `note`, `pos_paid`, `pos_balance`, `approval_code`) VALUES ('8', '2017-05-25 17:12:40', '8', NULL, NULL, 'IPAY/2017/05/0002', NULL, 'cash', '', '', '', '', '', '', '600.0000', NULL, '1', NULL, 'received', '', '600.0000', '0.0000', NULL);
+
+
+#
+# TABLE STRUCTURE FOR: sma_paypal
+#
+
+DROP TABLE IF EXISTS `sma_paypal`;
+
+CREATE TABLE `sma_paypal` (
+  `id` int(11) NOT NULL,
+  `active` tinyint(4) NOT NULL,
+  `account_email` varchar(255) NOT NULL,
+  `paypal_currency` varchar(3) NOT NULL DEFAULT 'USD',
+  `fixed_charges` decimal(25,4) NOT NULL DEFAULT '2.0000',
+  `extra_charges_my` decimal(25,4) NOT NULL DEFAULT '3.9000',
+  `extra_charges_other` decimal(25,4) NOT NULL DEFAULT '4.4000',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_paypal` (`id`, `active`, `account_email`, `paypal_currency`, `fixed_charges`, `extra_charges_my`, `extra_charges_other`) VALUES ('1', '1', 'isoft_isoft@yahoo.com', 'USD', '0.0000', '0.0000', '0.0000');
+
+
+#
+# TABLE STRUCTURE FOR: sma_permissions
+#
+
+DROP TABLE IF EXISTS `sma_permissions`;
+
+CREATE TABLE `sma_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `products-index` tinyint(1) DEFAULT '0',
+  `products-add` tinyint(1) DEFAULT '0',
+  `products-edit` tinyint(1) DEFAULT '0',
+  `products-delete` tinyint(1) DEFAULT '0',
+  `products-cost` tinyint(1) DEFAULT '0',
+  `products-price` tinyint(1) DEFAULT '0',
+  `quotes-index` tinyint(1) DEFAULT '0',
+  `quotes-add` tinyint(1) DEFAULT '0',
+  `quotes-edit` tinyint(1) DEFAULT '0',
+  `quotes-pdf` tinyint(1) DEFAULT '0',
+  `quotes-email` tinyint(1) DEFAULT '0',
+  `quotes-delete` tinyint(1) DEFAULT '0',
+  `sales-index` tinyint(1) DEFAULT '0',
+  `sales-add` tinyint(1) DEFAULT '0',
+  `sales-edit` tinyint(1) DEFAULT '0',
+  `sales-pdf` tinyint(1) DEFAULT '0',
+  `sales-email` tinyint(1) DEFAULT '0',
+  `sales-delete` tinyint(1) DEFAULT '0',
+  `purchases-index` tinyint(1) DEFAULT '0',
+  `purchases-add` tinyint(1) DEFAULT '0',
+  `purchases-edit` tinyint(1) DEFAULT '0',
+  `purchases-pdf` tinyint(1) DEFAULT '0',
+  `purchases-email` tinyint(1) DEFAULT '0',
+  `purchases-delete` tinyint(1) DEFAULT '0',
+  `transfers-index` tinyint(1) DEFAULT '0',
+  `transfers-add` tinyint(1) DEFAULT '0',
+  `transfers-edit` tinyint(1) DEFAULT '0',
+  `transfers-pdf` tinyint(1) DEFAULT '0',
+  `transfers-email` tinyint(1) DEFAULT '0',
+  `transfers-delete` tinyint(1) DEFAULT '0',
+  `customers-index` tinyint(1) DEFAULT '0',
+  `customers-add` tinyint(1) DEFAULT '0',
+  `customers-edit` tinyint(1) DEFAULT '0',
+  `customers-delete` tinyint(1) DEFAULT '0',
+  `suppliers-index` tinyint(1) DEFAULT '0',
+  `suppliers-add` tinyint(1) DEFAULT '0',
+  `suppliers-edit` tinyint(1) DEFAULT '0',
+  `suppliers-delete` tinyint(1) DEFAULT '0',
+  `sales-deliveries` tinyint(1) DEFAULT '0',
+  `sales-add_delivery` tinyint(1) DEFAULT '0',
+  `sales-edit_delivery` tinyint(1) DEFAULT '0',
+  `sales-delete_delivery` tinyint(1) DEFAULT '0',
+  `sales-email_delivery` tinyint(1) DEFAULT '0',
+  `sales-pdf_delivery` tinyint(1) DEFAULT '0',
+  `sales-gift_cards` tinyint(1) DEFAULT '0',
+  `sales-add_gift_card` tinyint(1) DEFAULT '0',
+  `sales-edit_gift_card` tinyint(1) DEFAULT '0',
+  `sales-delete_gift_card` tinyint(1) DEFAULT '0',
+  `pos-index` tinyint(1) DEFAULT '0',
+  `sales-return_sales` tinyint(1) DEFAULT '0',
+  `reports-index` tinyint(1) DEFAULT '0',
+  `reports-warehouse_stock` tinyint(1) DEFAULT '0',
+  `reports-quantity_alerts` tinyint(1) DEFAULT '0',
+  `reports-expiry_alerts` tinyint(1) DEFAULT '0',
+  `reports-products` tinyint(1) DEFAULT '0',
+  `reports-daily_sales` tinyint(1) DEFAULT '0',
+  `reports-monthly_sales` tinyint(1) DEFAULT '0',
+  `reports-sales` tinyint(1) DEFAULT '0',
+  `reports-payments` tinyint(1) DEFAULT '0',
+  `reports-purchases` tinyint(1) DEFAULT '0',
+  `reports-profit_loss` tinyint(1) DEFAULT '0',
+  `reports-customers` tinyint(1) DEFAULT '0',
+  `reports-suppliers` tinyint(1) DEFAULT '0',
+  `reports-staff` tinyint(1) DEFAULT '0',
+  `reports-register` tinyint(1) DEFAULT '0',
+  `sales-payments` tinyint(1) DEFAULT '0',
+  `purchases-payments` tinyint(1) DEFAULT '0',
+  `purchases-expenses` tinyint(1) DEFAULT '0',
+  `reports-daily_purchases` tinyint(1) DEFAULT '0',
+  `reports-monthly_purchases` tinyint(1) DEFAULT '0',
+  `products-adjustments` tinyint(1) NOT NULL DEFAULT '0',
+  `bulk_actions` tinyint(1) NOT NULL DEFAULT '0',
+  `customers-deposits` tinyint(1) NOT NULL DEFAULT '0',
+  `customers-delete_deposit` tinyint(1) NOT NULL DEFAULT '0',
+  `products-barcode` tinyint(1) NOT NULL DEFAULT '0',
+  `purchases-return_purchases` tinyint(1) NOT NULL DEFAULT '0',
+  `reports-expenses` tinyint(1) NOT NULL DEFAULT '0',
+  `products-stock_count` tinyint(1) DEFAULT '0',
+  `edit_price` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_permissions` (`id`, `group_id`, `products-index`, `products-add`, `products-edit`, `products-delete`, `products-cost`, `products-price`, `quotes-index`, `quotes-add`, `quotes-edit`, `quotes-pdf`, `quotes-email`, `quotes-delete`, `sales-index`, `sales-add`, `sales-edit`, `sales-pdf`, `sales-email`, `sales-delete`, `purchases-index`, `purchases-add`, `purchases-edit`, `purchases-pdf`, `purchases-email`, `purchases-delete`, `transfers-index`, `transfers-add`, `transfers-edit`, `transfers-pdf`, `transfers-email`, `transfers-delete`, `customers-index`, `customers-add`, `customers-edit`, `customers-delete`, `suppliers-index`, `suppliers-add`, `suppliers-edit`, `suppliers-delete`, `sales-deliveries`, `sales-add_delivery`, `sales-edit_delivery`, `sales-delete_delivery`, `sales-email_delivery`, `sales-pdf_delivery`, `sales-gift_cards`, `sales-add_gift_card`, `sales-edit_gift_card`, `sales-delete_gift_card`, `pos-index`, `sales-return_sales`, `reports-index`, `reports-warehouse_stock`, `reports-quantity_alerts`, `reports-expiry_alerts`, `reports-products`, `reports-daily_sales`, `reports-monthly_sales`, `reports-sales`, `reports-payments`, `reports-purchases`, `reports-profit_loss`, `reports-customers`, `reports-suppliers`, `reports-staff`, `reports-register`, `sales-payments`, `purchases-payments`, `purchases-expenses`, `reports-daily_purchases`, `reports-monthly_purchases`, `products-adjustments`, `bulk_actions`, `customers-deposits`, `customers-delete_deposit`, `products-barcode`, `purchases-return_purchases`, `reports-expenses`, `products-stock_count`, `edit_price`) VALUES ('1', '5', '1', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '0', '1', '1', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '0', '0', '0', '0', '0', '1', '1', '1', '0', '0', '1', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+
+
+#
+# TABLE STRUCTURE FOR: sma_pos_register
+#
+
+DROP TABLE IF EXISTS `sma_pos_register`;
+
+CREATE TABLE `sma_pos_register` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_id` int(11) NOT NULL,
+  `cash_in_hand` decimal(25,4) NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `total_cash` decimal(25,4) DEFAULT NULL,
+  `total_cheques` int(11) DEFAULT NULL,
+  `total_cc_slips` int(11) DEFAULT NULL,
+  `total_cash_submitted` decimal(25,4) NOT NULL,
+  `total_cheques_submitted` int(11) NOT NULL,
+  `total_cc_slips_submitted` int(11) NOT NULL,
+  `note` text,
+  `closed_at` timestamp NULL DEFAULT NULL,
+  `transfer_opened_bills` varchar(50) DEFAULT NULL,
+  `closed_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_pos_register` (`id`, `date`, `user_id`, `cash_in_hand`, `status`, `total_cash`, `total_cheques`, `total_cc_slips`, `total_cash_submitted`, `total_cheques_submitted`, `total_cc_slips_submitted`, `note`, `closed_at`, `transfer_opened_bills`, `closed_by`) VALUES ('1', '2017-04-25 12:03:20', '1', '100000.0000', 'open', NULL, NULL, NULL, '0.0000', '0', '0', NULL, NULL, NULL, NULL);
+
+
+#
+# TABLE STRUCTURE FOR: sma_pos_settings
+#
+
+DROP TABLE IF EXISTS `sma_pos_settings`;
+
+CREATE TABLE `sma_pos_settings` (
+  `pos_id` int(1) NOT NULL,
+  `cat_limit` int(11) NOT NULL,
+  `pro_limit` int(11) NOT NULL,
+  `default_category` int(11) NOT NULL,
+  `default_customer` int(11) NOT NULL,
+  `default_biller` int(11) NOT NULL,
+  `display_time` varchar(3) NOT NULL DEFAULT 'yes',
+  `cf_title1` varchar(255) DEFAULT NULL,
+  `cf_title2` varchar(255) DEFAULT NULL,
+  `cf_value1` varchar(255) DEFAULT NULL,
+  `cf_value2` varchar(255) DEFAULT NULL,
+  `receipt_printer` varchar(55) DEFAULT NULL,
+  `cash_drawer_codes` varchar(55) DEFAULT NULL,
+  `focus_add_item` varchar(55) DEFAULT NULL,
+  `add_manual_product` varchar(55) DEFAULT NULL,
+  `customer_selection` varchar(55) DEFAULT NULL,
+  `add_customer` varchar(55) DEFAULT NULL,
+  `toggle_category_slider` varchar(55) DEFAULT NULL,
+  `toggle_subcategory_slider` varchar(55) DEFAULT NULL,
+  `cancel_sale` varchar(55) DEFAULT NULL,
+  `suspend_sale` varchar(55) DEFAULT NULL,
+  `print_items_list` varchar(55) DEFAULT NULL,
+  `finalize_sale` varchar(55) DEFAULT NULL,
+  `today_sale` varchar(55) DEFAULT NULL,
+  `open_hold_bills` varchar(55) DEFAULT NULL,
+  `close_register` varchar(55) DEFAULT NULL,
+  `keyboard` tinyint(1) NOT NULL,
+  `pos_printers` varchar(255) DEFAULT NULL,
+  `java_applet` tinyint(1) NOT NULL,
+  `product_button_color` varchar(20) NOT NULL DEFAULT 'default',
+  `tooltips` tinyint(1) DEFAULT '1',
+  `paypal_pro` tinyint(1) DEFAULT '0',
+  `stripe` tinyint(1) DEFAULT '0',
+  `rounding` tinyint(1) DEFAULT '0',
+  `char_per_line` tinyint(4) DEFAULT '42',
+  `pin_code` varchar(20) DEFAULT NULL,
+  `purchase_code` varchar(100) DEFAULT 'purchase_code',
+  `envato_username` varchar(50) DEFAULT 'envato_username',
+  `version` varchar(10) DEFAULT '3.0.1.13',
+  `remote_printing` tinyint(1) DEFAULT '1',
+  `printer` int(11) DEFAULT NULL,
+  `order_printers` varchar(55) DEFAULT NULL,
+  `auto_print` tinyint(1) DEFAULT '0',
+  `customer_details` tinyint(1) DEFAULT NULL,
+  `after_sale_page` tinyint(1) DEFAULT '0',
+  `item_order` tinyint(1) DEFAULT '0',
+  `authorize` tinyint(1) DEFAULT '0',
+  `toggle_brands_slider` varchar(55) DEFAULT NULL,
+  PRIMARY KEY (`pos_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_pos_settings` (`pos_id`, `cat_limit`, `pro_limit`, `default_category`, `default_customer`, `default_biller`, `display_time`, `cf_title1`, `cf_title2`, `cf_value1`, `cf_value2`, `receipt_printer`, `cash_drawer_codes`, `focus_add_item`, `add_manual_product`, `customer_selection`, `add_customer`, `toggle_category_slider`, `toggle_subcategory_slider`, `cancel_sale`, `suspend_sale`, `print_items_list`, `finalize_sale`, `today_sale`, `open_hold_bills`, `close_register`, `keyboard`, `pos_printers`, `java_applet`, `product_button_color`, `tooltips`, `paypal_pro`, `stripe`, `rounding`, `char_per_line`, `pin_code`, `purchase_code`, `envato_username`, `version`, `remote_printing`, `printer`, `order_printers`, `auto_print`, `customer_details`, `after_sale_page`, `item_order`, `authorize`, `toggle_brands_slider`) VALUES ('1', '22', '20', '1', '1', '3', '1', '', '', '', '', NULL, 'x1C', 'Ctrl+F3', 'Ctrl+Shift+M', 'Ctrl+Shift+C', 'Ctrl+Shift+A', 'Ctrl+F11', 'Ctrl+F12', 'F4', 'F7', 'F9', 'F8', 'Ctrl+F1', 'Ctrl+F2', 'Ctrl+F10', '1', NULL, '0', 'default', '1', '0', '0', '3', '42', NULL, 'purchase_code', 'envato_username', '3.0.2.23', '1', NULL, 'null', '0', '0', '0', '0', '0', '');
+
+
+#
+# TABLE STRUCTURE FOR: sma_price_groups
+#
+
+DROP TABLE IF EXISTS `sma_price_groups`;
+
+CREATE TABLE `sma_price_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_price_groups` (`id`, `name`) VALUES ('1', 'Default');
+
+
+#
+# TABLE STRUCTURE FOR: sma_printers
+#
+
+DROP TABLE IF EXISTS `sma_printers`;
+
+CREATE TABLE `sma_printers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(55) NOT NULL,
+  `type` varchar(25) NOT NULL,
+  `profile` varchar(25) NOT NULL,
+  `char_per_line` tinyint(3) unsigned DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  `ip_address` varbinary(45) DEFAULT NULL,
+  `port` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_product_photos
+#
+
+DROP TABLE IF EXISTS `sma_product_photos`;
+
+CREATE TABLE `sma_product_photos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `photo` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_product_prices
+#
+
+DROP TABLE IF EXISTS `sma_product_prices`;
+
+CREATE TABLE `sma_product_prices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `price_group_id` int(11) NOT NULL,
+  `price` decimal(25,4) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  KEY `price_group_id` (`price_group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_product_variants
+#
+
+DROP TABLE IF EXISTS `sma_product_variants`;
+
+CREATE TABLE `sma_product_variants` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `name` varchar(55) NOT NULL,
+  `cost` decimal(25,4) DEFAULT NULL,
+  `price` decimal(25,4) DEFAULT NULL,
+  `quantity` decimal(15,4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_products
+#
+
+DROP TABLE IF EXISTS `sma_products`;
+
+CREATE TABLE `sma_products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(50) NOT NULL,
+  `name` char(255) NOT NULL,
+  `unit` int(11) DEFAULT '1',
+  `cost` decimal(25,4) DEFAULT NULL,
+  `price` decimal(25,4) NOT NULL,
+  `alert_quantity` decimal(15,4) DEFAULT '20.0000',
+  `image` varchar(255) DEFAULT 'no_image.png',
+  `category_id` int(11) NOT NULL,
+  `subcategory_id` int(11) DEFAULT NULL,
+  `cf1` varchar(255) DEFAULT NULL,
+  `cf2` varchar(255) DEFAULT NULL,
+  `cf3` varchar(255) DEFAULT NULL,
+  `cf4` varchar(255) DEFAULT NULL,
+  `cf5` varchar(255) DEFAULT NULL,
+  `cf6` varchar(255) DEFAULT NULL,
+  `quantity` decimal(15,4) DEFAULT '0.0000',
+  `tax_rate` int(11) DEFAULT NULL,
+  `track_quantity` tinyint(1) DEFAULT '1',
+  `details` varchar(1000) DEFAULT NULL,
+  `warehouse` int(11) DEFAULT NULL,
+  `barcode_symbology` varchar(55) NOT NULL DEFAULT 'code128',
+  `file` varchar(100) DEFAULT NULL,
+  `product_details` text,
+  `tax_method` tinyint(1) DEFAULT '0',
+  `type` varchar(55) NOT NULL DEFAULT 'standard',
+  `supplier1` int(11) DEFAULT NULL,
+  `supplier1price` decimal(25,4) DEFAULT NULL,
+  `supplier2` int(11) DEFAULT NULL,
+  `supplier2price` decimal(25,4) DEFAULT NULL,
+  `supplier3` int(11) DEFAULT NULL,
+  `supplier3price` decimal(25,4) DEFAULT NULL,
+  `supplier4` int(11) DEFAULT NULL,
+  `supplier4price` decimal(25,4) DEFAULT NULL,
+  `supplier5` int(11) DEFAULT NULL,
+  `supplier5price` decimal(25,4) DEFAULT NULL,
+  `promotion` tinyint(1) DEFAULT '0',
+  `promo_price` decimal(25,4) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `supplier1_part_no` varchar(50) DEFAULT NULL,
+  `supplier2_part_no` varchar(50) DEFAULT NULL,
+  `supplier3_part_no` varchar(50) DEFAULT NULL,
+  `supplier4_part_no` varchar(50) DEFAULT NULL,
+  `supplier5_part_no` varchar(50) DEFAULT NULL,
+  `sale_unit` int(11) DEFAULT NULL,
+  `purchase_unit` int(11) DEFAULT NULL,
+  `brand` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`),
+  KEY `category_id` (`category_id`),
+  KEY `id` (`id`),
+  KEY `id_2` (`id`),
+  KEY `category_id_2` (`category_id`),
+  KEY `unit` (`unit`),
+  KEY `brand` (`brand`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_products` (`id`, `code`, `name`, `unit`, `cost`, `price`, `alert_quantity`, `image`, `category_id`, `subcategory_id`, `cf1`, `cf2`, `cf3`, `cf4`, `cf5`, `cf6`, `quantity`, `tax_rate`, `track_quantity`, `details`, `warehouse`, `barcode_symbology`, `file`, `product_details`, `tax_method`, `type`, `supplier1`, `supplier1price`, `supplier2`, `supplier2price`, `supplier3`, `supplier3price`, `supplier4`, `supplier4price`, `supplier5`, `supplier5price`, `promotion`, `promo_price`, `start_date`, `end_date`, `supplier1_part_no`, `supplier2_part_no`, `supplier3_part_no`, `supplier4_part_no`, `supplier5_part_no`, `sale_unit`, `purchase_unit`, `brand`) VALUES ('1', '99939933fdfsd', 'isoftjhang', '1', '788.0000', '600.0000', '0.0000', 'no_image.png', '1', '1', '', '', '', '', '', '', '3.5000', NULL, '1', '', NULL, 'code128', NULL, '', NULL, 'standard', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, '1', '1', '1');
+INSERT INTO `sma_products` (`id`, `code`, `name`, `unit`, `cost`, `price`, `alert_quantity`, `image`, `category_id`, `subcategory_id`, `cf1`, `cf2`, `cf3`, `cf4`, `cf5`, `cf6`, `quantity`, `tax_rate`, `track_quantity`, `details`, `warehouse`, `barcode_symbology`, `file`, `product_details`, `tax_method`, `type`, `supplier1`, `supplier1price`, `supplier2`, `supplier2price`, `supplier3`, `supplier3price`, `supplier4`, `supplier4price`, `supplier5`, `supplier5price`, `promotion`, `promo_price`, `start_date`, `end_date`, `supplier1_part_no`, `supplier2_part_no`, `supplier3_part_no`, `supplier4_part_no`, `supplier5_part_no`, `sale_unit`, `purchase_unit`, `brand`) VALUES ('2', '122', 'isoftjhang', '1', '788.0000', '899.0000', '0.0000', 'no_image.png', '1', NULL, '', '', '', '', '', '', '0.0000', '1', '1', '', NULL, 'code128', '', '', '0', 'standard', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, '0', '0', '1');
+INSERT INTO `sma_products` (`id`, `code`, `name`, `unit`, `cost`, `price`, `alert_quantity`, `image`, `category_id`, `subcategory_id`, `cf1`, `cf2`, `cf3`, `cf4`, `cf5`, `cf6`, `quantity`, `tax_rate`, `track_quantity`, `details`, `warehouse`, `barcode_symbology`, `file`, `product_details`, `tax_method`, `type`, `supplier1`, `supplier1price`, `supplier2`, `supplier2price`, `supplier3`, `supplier3price`, `supplier4`, `supplier4price`, `supplier5`, `supplier5price`, `promotion`, `promo_price`, `start_date`, `end_date`, `supplier1_part_no`, `supplier2_part_no`, `supplier3_part_no`, `supplier4_part_no`, `supplier5_part_no`, `sale_unit`, `purchase_unit`, `brand`) VALUES ('3', '74650', 'rohanidunya.com.pk', '1', '300.0000', '500.0000', '0.0000', 'no_image.png', '1', NULL, '', '', '', '', '', '', '0.0000', NULL, '1', '', NULL, 'code128', '', '', NULL, 'standard', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, '1', '1', '1');
+
+
+#
+# TABLE STRUCTURE FOR: sma_purchase_items
+#
+
+DROP TABLE IF EXISTS `sma_purchase_items`;
+
+CREATE TABLE `sma_purchase_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `purchase_id` int(11) DEFAULT NULL,
+  `transfer_id` int(11) DEFAULT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_code` varchar(50) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `option_id` int(11) DEFAULT NULL,
+  `net_unit_cost` decimal(25,4) NOT NULL,
+  `quantity` decimal(15,4) NOT NULL,
+  `warehouse_id` int(11) NOT NULL,
+  `item_tax` decimal(25,4) DEFAULT NULL,
+  `tax_rate_id` int(11) DEFAULT NULL,
+  `tax` varchar(20) DEFAULT NULL,
+  `discount` varchar(20) DEFAULT NULL,
+  `item_discount` decimal(25,4) DEFAULT NULL,
+  `expiry` date DEFAULT NULL,
+  `subtotal` decimal(25,4) NOT NULL,
+  `quantity_balance` decimal(15,4) DEFAULT '0.0000',
+  `date` date NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `unit_cost` decimal(25,4) DEFAULT NULL,
+  `real_unit_cost` decimal(25,4) DEFAULT NULL,
+  `purchase_item_id` int(11) DEFAULT NULL,
+  `quantity_received` decimal(15,4) DEFAULT NULL,
+  `supplier_part_no` varchar(50) DEFAULT NULL,
+  `product_unit_id` int(11) DEFAULT NULL,
+  `product_unit_code` varchar(10) DEFAULT NULL,
+  `unit_quantity` decimal(15,4) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `purchase_id` (`purchase_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_purchase_items` (`id`, `purchase_id`, `transfer_id`, `product_id`, `product_code`, `product_name`, `option_id`, `net_unit_cost`, `quantity`, `warehouse_id`, `item_tax`, `tax_rate_id`, `tax`, `discount`, `item_discount`, `expiry`, `subtotal`, `quantity_balance`, `date`, `status`, `unit_cost`, `real_unit_cost`, `purchase_item_id`, `quantity_received`, `supplier_part_no`, `product_unit_id`, `product_unit_code`, `unit_quantity`) VALUES ('1', '1', NULL, '1', '88432', 'kurta', NULL, '800.0000', '30.0000', '2', '0.0000', '1', '0.0000', '0', '0.0000', NULL, '24000.0000', '3.5000', '2017-04-25', 'received', '800.0000', '800.0000', NULL, NULL, NULL, NULL, NULL, '0.0000');
+
+
+#
+# TABLE STRUCTURE FOR: sma_purchases
+#
+
+DROP TABLE IF EXISTS `sma_purchases`;
+
+CREATE TABLE `sma_purchases` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reference_no` varchar(55) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `supplier_id` int(11) NOT NULL,
+  `supplier` varchar(55) NOT NULL,
+  `warehouse_id` int(11) NOT NULL,
+  `note` varchar(1000) NOT NULL,
+  `total` decimal(25,4) DEFAULT NULL,
+  `product_discount` decimal(25,4) DEFAULT NULL,
+  `order_discount_id` varchar(20) DEFAULT NULL,
+  `order_discount` decimal(25,4) DEFAULT NULL,
+  `total_discount` decimal(25,4) DEFAULT NULL,
+  `product_tax` decimal(25,4) DEFAULT NULL,
+  `order_tax_id` int(11) DEFAULT NULL,
+  `order_tax` decimal(25,4) DEFAULT NULL,
+  `total_tax` decimal(25,4) DEFAULT '0.0000',
+  `shipping` decimal(25,4) DEFAULT '0.0000',
+  `grand_total` decimal(25,4) NOT NULL,
+  `paid` decimal(25,4) NOT NULL DEFAULT '0.0000',
+  `status` varchar(55) DEFAULT '',
+  `payment_status` varchar(20) DEFAULT 'pending',
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `attachment` varchar(55) DEFAULT NULL,
+  `return_purchase_ref` varchar(55) DEFAULT NULL,
+  `purchase_id` int(11) DEFAULT NULL,
+  `return_purchase_total` decimal(25,4) NOT NULL DEFAULT '0.0000',
+  `payment_term` tinyint(4) DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `return_id` int(11) DEFAULT NULL,
+  `surcharge` decimal(25,4) NOT NULL DEFAULT '0.0000',
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_purchases` (`id`, `reference_no`, `date`, `supplier_id`, `supplier`, `warehouse_id`, `note`, `total`, `product_discount`, `order_discount_id`, `order_discount`, `total_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `shipping`, `grand_total`, `paid`, `status`, `payment_status`, `created_by`, `updated_by`, `updated_at`, `attachment`, `return_purchase_ref`, `purchase_id`, `return_purchase_total`, `payment_term`, `due_date`, `return_id`, `surcharge`) VALUES ('1', '43', '2017-04-25 15:51:00', '2', 'I-Soft Solutions', '2', '', '24000.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '0', '0.0000', '0.0000', '0.0000', '24000.0000', '0.0000', 'received', 'pending', '1', NULL, NULL, NULL, NULL, NULL, '0.0000', NULL, NULL, NULL, '0.0000');
+
+
+#
+# TABLE STRUCTURE FOR: sma_quote_items
+#
+
+DROP TABLE IF EXISTS `sma_quote_items`;
+
+CREATE TABLE `sma_quote_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `quote_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_code` varchar(55) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `product_type` varchar(20) DEFAULT NULL,
+  `option_id` int(11) DEFAULT NULL,
+  `net_unit_price` decimal(25,4) NOT NULL,
+  `unit_price` decimal(25,4) DEFAULT NULL,
+  `quantity` decimal(15,4) NOT NULL,
+  `warehouse_id` int(11) DEFAULT NULL,
+  `item_tax` decimal(25,4) DEFAULT NULL,
+  `tax_rate_id` int(11) DEFAULT NULL,
+  `tax` varchar(55) DEFAULT NULL,
+  `discount` varchar(55) DEFAULT NULL,
+  `item_discount` decimal(25,4) DEFAULT NULL,
+  `subtotal` decimal(25,4) NOT NULL,
+  `serial_no` varchar(255) DEFAULT NULL,
+  `real_unit_price` decimal(25,4) DEFAULT NULL,
+  `product_unit_id` int(11) DEFAULT NULL,
+  `product_unit_code` varchar(10) DEFAULT NULL,
+  `unit_quantity` decimal(15,4) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `quote_id` (`quote_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_quotes
+#
+
+DROP TABLE IF EXISTS `sma_quotes`;
+
+CREATE TABLE `sma_quotes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `reference_no` varchar(55) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `customer` varchar(55) NOT NULL,
+  `warehouse_id` int(11) DEFAULT NULL,
+  `biller_id` int(11) NOT NULL,
+  `biller` varchar(55) NOT NULL,
+  `note` varchar(1000) DEFAULT NULL,
+  `internal_note` varchar(1000) DEFAULT NULL,
+  `total` decimal(25,4) NOT NULL,
+  `product_discount` decimal(25,4) DEFAULT '0.0000',
+  `order_discount` decimal(25,4) DEFAULT NULL,
+  `order_discount_id` varchar(20) DEFAULT NULL,
+  `total_discount` decimal(25,4) DEFAULT '0.0000',
+  `product_tax` decimal(25,4) DEFAULT '0.0000',
+  `order_tax_id` int(11) DEFAULT NULL,
+  `order_tax` decimal(25,4) DEFAULT NULL,
+  `total_tax` decimal(25,4) DEFAULT NULL,
+  `shipping` decimal(25,4) DEFAULT '0.0000',
+  `grand_total` decimal(25,4) NOT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `attachment` varchar(55) DEFAULT NULL,
+  `supplier_id` int(11) DEFAULT NULL,
+  `supplier` varchar(55) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_return_items
+#
+
+DROP TABLE IF EXISTS `sma_return_items`;
+
+CREATE TABLE `sma_return_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sale_id` int(11) unsigned NOT NULL,
+  `return_id` int(11) unsigned NOT NULL,
+  `sale_item_id` int(11) DEFAULT NULL,
+  `product_id` int(11) unsigned NOT NULL,
+  `product_code` varchar(55) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `product_type` varchar(20) DEFAULT NULL,
+  `option_id` int(11) DEFAULT NULL,
+  `net_unit_price` decimal(25,4) NOT NULL,
+  `quantity` decimal(15,4) DEFAULT '0.0000',
+  `warehouse_id` int(11) DEFAULT NULL,
+  `item_tax` decimal(25,4) DEFAULT NULL,
+  `tax_rate_id` int(11) DEFAULT NULL,
+  `tax` varchar(55) DEFAULT NULL,
+  `discount` varchar(55) DEFAULT NULL,
+  `item_discount` decimal(25,4) DEFAULT NULL,
+  `subtotal` decimal(25,4) NOT NULL,
+  `serial_no` varchar(255) DEFAULT NULL,
+  `real_unit_price` decimal(25,4) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sale_id` (`sale_id`),
+  KEY `product_id` (`product_id`),
+  KEY `product_id_2` (`product_id`,`sale_id`),
+  KEY `sale_id_2` (`sale_id`,`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_return_purchase_items
+#
+
+DROP TABLE IF EXISTS `sma_return_purchase_items`;
+
+CREATE TABLE `sma_return_purchase_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `purchase_id` int(11) unsigned NOT NULL,
+  `return_id` int(11) unsigned NOT NULL,
+  `purchase_item_id` int(11) DEFAULT NULL,
+  `product_id` int(11) unsigned NOT NULL,
+  `product_code` varchar(55) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `product_type` varchar(20) DEFAULT NULL,
+  `option_id` int(11) DEFAULT NULL,
+  `net_unit_cost` decimal(25,4) NOT NULL,
+  `quantity` decimal(15,4) DEFAULT '0.0000',
+  `warehouse_id` int(11) DEFAULT NULL,
+  `item_tax` decimal(25,4) DEFAULT NULL,
+  `tax_rate_id` int(11) DEFAULT NULL,
+  `tax` varchar(55) DEFAULT NULL,
+  `discount` varchar(55) DEFAULT NULL,
+  `item_discount` decimal(25,4) DEFAULT NULL,
+  `subtotal` decimal(25,4) NOT NULL,
+  `real_unit_cost` decimal(25,4) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `purchase_id` (`purchase_id`),
+  KEY `product_id` (`product_id`),
+  KEY `product_id_2` (`product_id`,`purchase_id`),
+  KEY `purchase_id_2` (`purchase_id`,`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_return_purchases
+#
+
+DROP TABLE IF EXISTS `sma_return_purchases`;
+
+CREATE TABLE `sma_return_purchases` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `purchase_id` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `reference_no` varchar(55) NOT NULL,
+  `supplier_id` int(11) NOT NULL,
+  `supplier` varchar(55) NOT NULL,
+  `warehouse_id` int(11) DEFAULT NULL,
+  `note` varchar(1000) DEFAULT NULL,
+  `total` decimal(25,4) NOT NULL,
+  `product_discount` decimal(25,4) DEFAULT '0.0000',
+  `order_discount_id` varchar(20) DEFAULT NULL,
+  `total_discount` decimal(25,4) DEFAULT '0.0000',
+  `order_discount` decimal(25,4) DEFAULT '0.0000',
+  `product_tax` decimal(25,4) DEFAULT '0.0000',
+  `order_tax_id` int(11) DEFAULT NULL,
+  `order_tax` decimal(25,4) DEFAULT '0.0000',
+  `total_tax` decimal(25,4) DEFAULT '0.0000',
+  `surcharge` decimal(25,4) DEFAULT '0.0000',
+  `grand_total` decimal(25,4) NOT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `attachment` varchar(55) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_return_sales
+#
+
+DROP TABLE IF EXISTS `sma_return_sales`;
+
+CREATE TABLE `sma_return_sales` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sale_id` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `reference_no` varchar(55) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `customer` varchar(55) NOT NULL,
+  `biller_id` int(11) NOT NULL,
+  `biller` varchar(55) NOT NULL,
+  `warehouse_id` int(11) DEFAULT NULL,
+  `note` varchar(1000) DEFAULT NULL,
+  `total` decimal(25,4) NOT NULL,
+  `product_discount` decimal(25,4) DEFAULT '0.0000',
+  `order_discount_id` varchar(20) DEFAULT NULL,
+  `total_discount` decimal(25,4) DEFAULT '0.0000',
+  `order_discount` decimal(25,4) DEFAULT '0.0000',
+  `product_tax` decimal(25,4) DEFAULT '0.0000',
+  `order_tax_id` int(11) DEFAULT NULL,
+  `order_tax` decimal(25,4) DEFAULT '0.0000',
+  `total_tax` decimal(25,4) DEFAULT '0.0000',
+  `surcharge` decimal(25,4) DEFAULT '0.0000',
+  `grand_total` decimal(25,4) NOT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `attachment` varchar(55) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_sale_items
+#
+
+DROP TABLE IF EXISTS `sma_sale_items`;
+
+CREATE TABLE `sma_sale_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sale_id` int(11) unsigned NOT NULL,
+  `product_id` int(11) unsigned NOT NULL,
+  `product_code` varchar(55) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `product_type` varchar(20) DEFAULT NULL,
+  `option_id` int(11) DEFAULT NULL,
+  `net_unit_price` decimal(25,4) NOT NULL,
+  `unit_price` decimal(25,4) DEFAULT NULL,
+  `quantity` decimal(15,4) NOT NULL,
+  `warehouse_id` int(11) DEFAULT NULL,
+  `item_tax` decimal(25,4) DEFAULT NULL,
+  `tax_rate_id` int(11) DEFAULT NULL,
+  `tax` varchar(55) DEFAULT NULL,
+  `discount` varchar(55) DEFAULT NULL,
+  `item_discount` decimal(25,4) DEFAULT NULL,
+  `subtotal` decimal(25,4) NOT NULL,
+  `serial_no` varchar(255) DEFAULT NULL,
+  `real_unit_price` decimal(25,4) DEFAULT NULL,
+  `sale_item_id` int(11) DEFAULT NULL,
+  `product_unit_id` int(11) DEFAULT NULL,
+  `product_unit_code` varchar(10) DEFAULT NULL,
+  `unit_quantity` decimal(15,4) NOT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sale_id` (`sale_id`),
+  KEY `product_id` (`product_id`),
+  KEY `product_id_2` (`product_id`,`sale_id`),
+  KEY `sale_id_2` (`sale_id`,`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_sale_items` (`id`, `sale_id`, `product_id`, `product_code`, `product_name`, `product_type`, `option_id`, `net_unit_price`, `unit_price`, `quantity`, `warehouse_id`, `item_tax`, `tax_rate_id`, `tax`, `discount`, `item_discount`, `subtotal`, `serial_no`, `real_unit_price`, `sale_item_id`, `product_unit_id`, `product_unit_code`, `unit_quantity`, `comment`) VALUES ('1', '1', '1', '88432', 'kurta', 'standard', '0', '900.0000', '900.0000', '5.0000', '2', '0.0000', '1', '0.0000', '0', '0.0000', '4500.0000', '', '900.0000', NULL, NULL, NULL, '0.0000', NULL);
+INSERT INTO `sma_sale_items` (`id`, `sale_id`, `product_id`, `product_code`, `product_name`, `product_type`, `option_id`, `net_unit_price`, `unit_price`, `quantity`, `warehouse_id`, `item_tax`, `tax_rate_id`, `tax`, `discount`, `item_discount`, `subtotal`, `serial_no`, `real_unit_price`, `sale_item_id`, `product_unit_id`, `product_unit_code`, `unit_quantity`, `comment`) VALUES ('2', '2', '1', '88432', 'kurta', 'standard', '0', '900.0000', '900.0000', '1.0000', '2', '0.0000', '1', '0.0000', '0', '0.0000', '900.0000', '', '900.0000', NULL, NULL, NULL, '0.0000', NULL);
+INSERT INTO `sma_sale_items` (`id`, `sale_id`, `product_id`, `product_code`, `product_name`, `product_type`, `option_id`, `net_unit_price`, `unit_price`, `quantity`, `warehouse_id`, `item_tax`, `tax_rate_id`, `tax`, `discount`, `item_discount`, `subtotal`, `serial_no`, `real_unit_price`, `sale_item_id`, `product_unit_id`, `product_unit_code`, `unit_quantity`, `comment`) VALUES ('3', '3', '1', '88432', 'kurta', 'standard', '0', '900.0000', '900.0000', '3.0000', '2', '0.0000', '1', '0.0000', '0', '0.0000', '2700.0000', '', '900.0000', NULL, NULL, NULL, '0.0000', NULL);
+INSERT INTO `sma_sale_items` (`id`, `sale_id`, `product_id`, `product_code`, `product_name`, `product_type`, `option_id`, `net_unit_price`, `unit_price`, `quantity`, `warehouse_id`, `item_tax`, `tax_rate_id`, `tax`, `discount`, `item_discount`, `subtotal`, `serial_no`, `real_unit_price`, `sale_item_id`, `product_unit_id`, `product_unit_code`, `unit_quantity`, `comment`) VALUES ('4', '4', '1', '88432', 'kurta', 'standard', '0', '900.0000', '900.0000', '1.0000', '2', '0.0000', '1', '0.0000', '0', '0.0000', '900.0000', '', '900.0000', NULL, NULL, NULL, '0.0000', NULL);
+INSERT INTO `sma_sale_items` (`id`, `sale_id`, `product_id`, `product_code`, `product_name`, `product_type`, `option_id`, `net_unit_price`, `unit_price`, `quantity`, `warehouse_id`, `item_tax`, `tax_rate_id`, `tax`, `discount`, `item_discount`, `subtotal`, `serial_no`, `real_unit_price`, `sale_item_id`, `product_unit_id`, `product_unit_code`, `unit_quantity`, `comment`) VALUES ('5', '5', '1', '88432', 'kurta', 'standard', NULL, '900.0000', '900.0000', '1.0000', '2', '0.0000', '1', '0.0000', '0', '0.0000', '900.0000', '', '900.0000', NULL, NULL, NULL, '0.0000', NULL);
+INSERT INTO `sma_sale_items` (`id`, `sale_id`, `product_id`, `product_code`, `product_name`, `product_type`, `option_id`, `net_unit_price`, `unit_price`, `quantity`, `warehouse_id`, `item_tax`, `tax_rate_id`, `tax`, `discount`, `item_discount`, `subtotal`, `serial_no`, `real_unit_price`, `sale_item_id`, `product_unit_id`, `product_unit_code`, `unit_quantity`, `comment`) VALUES ('6', '6', '1', '88432', 'kurta', 'standard', '0', '900.0000', '900.0000', '1.0000', '2', '0.0000', '1', '0.0000', '0', '0.0000', '900.0000', '', '900.0000', NULL, NULL, NULL, '0.0000', NULL);
+INSERT INTO `sma_sale_items` (`id`, `sale_id`, `product_id`, `product_code`, `product_name`, `product_type`, `option_id`, `net_unit_price`, `unit_price`, `quantity`, `warehouse_id`, `item_tax`, `tax_rate_id`, `tax`, `discount`, `item_discount`, `subtotal`, `serial_no`, `real_unit_price`, `sale_item_id`, `product_unit_id`, `product_unit_code`, `unit_quantity`, `comment`) VALUES ('7', '7', '1', '99939933fdfsd', 'isoftjhang', 'standard', NULL, '600.0000', '600.0000', '1.5000', '2', '0.0000', '0', '', '0', '0.0000', '900.0000', '', '600.0000', NULL, '0', NULL, '1.5000', '');
+INSERT INTO `sma_sale_items` (`id`, `sale_id`, `product_id`, `product_code`, `product_name`, `product_type`, `option_id`, `net_unit_price`, `unit_price`, `quantity`, `warehouse_id`, `item_tax`, `tax_rate_id`, `tax`, `discount`, `item_discount`, `subtotal`, `serial_no`, `real_unit_price`, `sale_item_id`, `product_unit_id`, `product_unit_code`, `unit_quantity`, `comment`) VALUES ('8', '8', '1', '99939933fdfsd', 'isoftjhang', 'standard', NULL, '600.0000', '600.0000', '1.0000', '2', '0.0000', '0', '', '0', '0.0000', '600.0000', '', '600.0000', NULL, '0', NULL, '1.0000', '');
+
+
+#
+# TABLE STRUCTURE FOR: sma_sales
+#
+
+DROP TABLE IF EXISTS `sma_sales`;
+
+CREATE TABLE `sma_sales` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `reference_no` varchar(55) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `customer` varchar(55) NOT NULL,
+  `biller_id` int(11) NOT NULL,
+  `biller` varchar(55) NOT NULL,
+  `warehouse_id` int(11) DEFAULT NULL,
+  `note` varchar(1000) DEFAULT NULL,
+  `staff_note` varchar(1000) DEFAULT NULL,
+  `total` decimal(25,4) NOT NULL,
+  `product_discount` decimal(25,4) DEFAULT '0.0000',
+  `order_discount_id` varchar(20) DEFAULT NULL,
+  `total_discount` decimal(25,4) DEFAULT '0.0000',
+  `order_discount` decimal(25,4) DEFAULT '0.0000',
+  `product_tax` decimal(25,4) DEFAULT '0.0000',
+  `order_tax_id` int(11) DEFAULT NULL,
+  `order_tax` decimal(25,4) DEFAULT '0.0000',
+  `total_tax` decimal(25,4) DEFAULT '0.0000',
+  `shipping` decimal(25,4) DEFAULT '0.0000',
+  `grand_total` decimal(25,4) NOT NULL,
+  `sale_status` varchar(20) DEFAULT NULL,
+  `payment_status` varchar(20) DEFAULT NULL,
+  `payment_term` tinyint(4) DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `total_items` tinyint(4) DEFAULT NULL,
+  `pos` tinyint(1) NOT NULL DEFAULT '0',
+  `paid` decimal(25,4) DEFAULT '0.0000',
+  `return_id` int(11) DEFAULT NULL,
+  `surcharge` decimal(25,4) NOT NULL DEFAULT '0.0000',
+  `attachment` varchar(55) DEFAULT NULL,
+  `return_sale_ref` varchar(55) DEFAULT NULL,
+  `sale_id` int(11) DEFAULT NULL,
+  `return_sale_total` decimal(25,4) NOT NULL DEFAULT '0.0000',
+  `rounding` decimal(10,4) DEFAULT NULL,
+  `suspend_note` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_sales` (`id`, `date`, `reference_no`, `customer_id`, `customer`, `biller_id`, `biller`, `warehouse_id`, `note`, `staff_note`, `total`, `product_discount`, `order_discount_id`, `total_discount`, `order_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `shipping`, `grand_total`, `sale_status`, `payment_status`, `payment_term`, `due_date`, `created_by`, `updated_by`, `updated_at`, `total_items`, `pos`, `paid`, `return_id`, `surcharge`, `attachment`, `return_sale_ref`, `sale_id`, `return_sale_total`, `rounding`, `suspend_note`) VALUES ('1', '2017-04-25 15:54:13', 'SALE/POS/2017/04/0001', '1', 'Walk-in Customer', '3', 'Test Biller', '2', '', '', '4500.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '1', '0.0000', '0.0000', '0.0000', '4500.0000', 'completed', 'paid', '0', NULL, '1', NULL, NULL, '5', '1', '4500.0000', NULL, '0.0000', NULL, NULL, NULL, '0.0000', NULL, NULL);
+INSERT INTO `sma_sales` (`id`, `date`, `reference_no`, `customer_id`, `customer`, `biller_id`, `biller`, `warehouse_id`, `note`, `staff_note`, `total`, `product_discount`, `order_discount_id`, `total_discount`, `order_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `shipping`, `grand_total`, `sale_status`, `payment_status`, `payment_term`, `due_date`, `created_by`, `updated_by`, `updated_at`, `total_items`, `pos`, `paid`, `return_id`, `surcharge`, `attachment`, `return_sale_ref`, `sale_id`, `return_sale_total`, `rounding`, `suspend_note`) VALUES ('2', '2017-04-25 15:57:46', 'SALE/POS/2017/04/0002', '1', 'Walk-in Customer', '3', 'Ali Center Jhang', '2', '', '', '900.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '1', '0.0000', '0.0000', '0.0000', '900.0000', 'completed', 'paid', '0', NULL, '1', NULL, NULL, '1', '1', '900.0000', NULL, '0.0000', NULL, NULL, NULL, '0.0000', NULL, NULL);
+INSERT INTO `sma_sales` (`id`, `date`, `reference_no`, `customer_id`, `customer`, `biller_id`, `biller`, `warehouse_id`, `note`, `staff_note`, `total`, `product_discount`, `order_discount_id`, `total_discount`, `order_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `shipping`, `grand_total`, `sale_status`, `payment_status`, `payment_term`, `due_date`, `created_by`, `updated_by`, `updated_at`, `total_items`, `pos`, `paid`, `return_id`, `surcharge`, `attachment`, `return_sale_ref`, `sale_id`, `return_sale_total`, `rounding`, `suspend_note`) VALUES ('3', '2017-04-25 18:55:15', 'SALE/POS/2017/04/0003', '1', 'Walk-in Customer', '3', 'Ali Center Jhang', '2', '', '', '2700.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '1', '0.0000', '0.0000', '0.0000', '2700.0000', 'completed', 'paid', '0', NULL, '1', NULL, NULL, '3', '1', '2700.0000', NULL, '0.0000', NULL, NULL, NULL, '0.0000', NULL, NULL);
+INSERT INTO `sma_sales` (`id`, `date`, `reference_no`, `customer_id`, `customer`, `biller_id`, `biller`, `warehouse_id`, `note`, `staff_note`, `total`, `product_discount`, `order_discount_id`, `total_discount`, `order_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `shipping`, `grand_total`, `sale_status`, `payment_status`, `payment_term`, `due_date`, `created_by`, `updated_by`, `updated_at`, `total_items`, `pos`, `paid`, `return_id`, `surcharge`, `attachment`, `return_sale_ref`, `sale_id`, `return_sale_total`, `rounding`, `suspend_note`) VALUES ('4', '2017-04-26 08:19:45', 'SALE/POS/2017/04/0004', '1', 'Walk-in Customer', '3', 'Ali Center Jhang', '2', '', '', '900.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '1', '0.0000', '0.0000', '0.0000', '900.0000', 'completed', 'paid', '0', NULL, '1', NULL, NULL, '1', '1', '900.0000', NULL, '0.0000', NULL, NULL, NULL, '0.0000', NULL, NULL);
+INSERT INTO `sma_sales` (`id`, `date`, `reference_no`, `customer_id`, `customer`, `biller_id`, `biller`, `warehouse_id`, `note`, `staff_note`, `total`, `product_discount`, `order_discount_id`, `total_discount`, `order_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `shipping`, `grand_total`, `sale_status`, `payment_status`, `payment_term`, `due_date`, `created_by`, `updated_by`, `updated_at`, `total_items`, `pos`, `paid`, `return_id`, `surcharge`, `attachment`, `return_sale_ref`, `sale_id`, `return_sale_total`, `rounding`, `suspend_note`) VALUES ('5', '2017-04-29 14:00:45', 'SALE/POS/2017/04/0005', '1', 'Walk-in Customer', '3', 'Ali Center Jhang', '2', '', '', '900.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '1', '0.0000', '0.0000', '0.0000', '900.0000', 'completed', 'paid', '0', NULL, '1', NULL, NULL, '1', '1', '900.0000', NULL, '0.0000', NULL, NULL, NULL, '0.0000', NULL, NULL);
+INSERT INTO `sma_sales` (`id`, `date`, `reference_no`, `customer_id`, `customer`, `biller_id`, `biller`, `warehouse_id`, `note`, `staff_note`, `total`, `product_discount`, `order_discount_id`, `total_discount`, `order_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `shipping`, `grand_total`, `sale_status`, `payment_status`, `payment_term`, `due_date`, `created_by`, `updated_by`, `updated_at`, `total_items`, `pos`, `paid`, `return_id`, `surcharge`, `attachment`, `return_sale_ref`, `sale_id`, `return_sale_total`, `rounding`, `suspend_note`) VALUES ('6', '2017-05-06 17:38:45', 'SALE/POS/2017/05/0006', '1', 'Walk-in Customer', '3', 'Ali Center Jhang', '2', '', '', '900.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '1', '0.0000', '0.0000', '0.0000', '900.0000', 'completed', 'paid', '0', NULL, '1', NULL, NULL, '1', '1', '900.0000', NULL, '0.0000', NULL, NULL, NULL, '0.0000', NULL, NULL);
+INSERT INTO `sma_sales` (`id`, `date`, `reference_no`, `customer_id`, `customer`, `biller_id`, `biller`, `warehouse_id`, `note`, `staff_note`, `total`, `product_discount`, `order_discount_id`, `total_discount`, `order_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `shipping`, `grand_total`, `sale_status`, `payment_status`, `payment_term`, `due_date`, `created_by`, `updated_by`, `updated_at`, `total_items`, `pos`, `paid`, `return_id`, `surcharge`, `attachment`, `return_sale_ref`, `sale_id`, `return_sale_total`, `rounding`, `suspend_note`) VALUES ('7', '2017-05-25 17:11:13', 'SALE/POS/2017/05/0001', '1', 'Walk-in Customer', '3', 'Ali Center Jhang', '2', '', '', '900.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '1', '0.0000', '0.0000', '0.0000', '900.0000', 'completed', 'paid', '0', NULL, '1', NULL, NULL, '2', '1', '900.0000', NULL, '0.0000', NULL, NULL, NULL, '0.0000', '0.0000', NULL);
+INSERT INTO `sma_sales` (`id`, `date`, `reference_no`, `customer_id`, `customer`, `biller_id`, `biller`, `warehouse_id`, `note`, `staff_note`, `total`, `product_discount`, `order_discount_id`, `total_discount`, `order_discount`, `product_tax`, `order_tax_id`, `order_tax`, `total_tax`, `shipping`, `grand_total`, `sale_status`, `payment_status`, `payment_term`, `due_date`, `created_by`, `updated_by`, `updated_at`, `total_items`, `pos`, `paid`, `return_id`, `surcharge`, `attachment`, `return_sale_ref`, `sale_id`, `return_sale_total`, `rounding`, `suspend_note`) VALUES ('8', '2017-05-25 17:12:40', 'SALE/POS/2017/05/0002', '1', 'Walk-in Customer', '3', 'Ali Center Jhang', '2', '', '', '600.0000', '0.0000', NULL, '0.0000', '0.0000', '0.0000', '1', '0.0000', '0.0000', '0.0000', '600.0000', 'completed', 'paid', '0', NULL, '1', NULL, NULL, '1', '1', '600.0000', NULL, '0.0000', NULL, NULL, NULL, '0.0000', '0.0000', NULL);
+
+
+#
+# TABLE STRUCTURE FOR: sma_sessions
+#
+
+DROP TABLE IF EXISTS `sma_sessions`;
+
+CREATE TABLE `sma_sessions` (
+  `id` varchar(40) NOT NULL,
+  `ip_address` varchar(45) NOT NULL,
+  `timestamp` int(10) unsigned NOT NULL DEFAULT '0',
+  `data` blob NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ci_sessions_timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('028d415230bb3d0e9176d7b3cdfeb692acb734ff', '192.168.8.100', '1493662499', '__ci_last_regenerate|i:1493662488;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493660153\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";message|s:38:\"<p>You are successfully logged in.</p>\";__ci_vars|a:1:{s:7:\"message\";s:3:\"old\";}');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('0dbaccc7e846a499f548274bca8427a448365977', '::1', '1493456467', '__ci_last_regenerate|i:1493456373;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493204432\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493456447;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";remove_posls|i:1;');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('0ea48d6ff86f0fed1e755df2da0259ca0a81d53c', '192.168.8.101', '1493660089', '__ci_last_regenerate|i:1493660089;requested_page|s:0:\"\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('111d9a2264153651ac782dbfb79fcbe3f5449b27', '::1', '1493124283', '__ci_last_regenerate|i:1493124282;requested_page|s:0:\"\";identity|s:18:\"owner@tecdiary.com\";username|s:5:\"owner\";email|s:18:\"owner@tecdiary.com\";user_id|s:1:\"1\";old_last_login|s:10:\"1426618492\";last_ip|s:9:\"127.0.0.1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493117990;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";user_csrf|s:20:\"BATUHJOdDevFwPZLjIyu\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('11c5f9d1b251b27d2232e6b75b9fcf7ff32fca08', '192.168.8.101', '1493662546', '__ci_last_regenerate|i:1493662508;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493662498\";last_ip|s:13:\"192.168.8.100\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('13d4466ef5efc3c37d6bbc510062b405dae8b31e', '192.168.8.101', '1493665810', '__ci_last_regenerate|i:1493665607;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493665548\";last_ip|s:13:\"192.168.8.100\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('1ec548eb570351a6c13a6c7ff51dd55299e9be00', '::1', '1495691983', '__ci_last_regenerate|i:1495691983;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495690482\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('1ef12bcfe3cbcac6091d6ba82aa96c428afe406d', '::1', '1494074817', '__ci_last_regenerate|i:1494074788;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493987078\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1494074349;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('22cbf5cbff374f0a6ad0ac31425d2f9810d46e44', '::1', '1493453075', '__ci_last_regenerate|i:1493452840;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493204432\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493453075;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('2ca32b848d7f1cb190de67daa1eb32969a23f2c7', '192.168.8.100', '1493665385', '__ci_last_regenerate|i:1493665384;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493660153\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('2cb1f31819fe7f2fe5b9bf5ea9a074433818d926', '192.168.8.101', '1493661315', '__ci_last_regenerate|i:1493661315;requested_page|s:0:\"\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('2d1d5c748b7a4e045bcf64d1553cdd53e900d63b', '::1', '1493662828', '__ci_last_regenerate|i:1493662828;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493452873\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('30e986ca3859c7cfbc1e80aeb91daa7a609703d1', '::1', '1493176331', '__ci_last_regenerate|i:1493176331;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493127138\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493176230;');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('38ssbvme1d3co31bsmvn8ajdeho4j4i8', '::1', '1495484539', '__ci_last_regenerate|i:1495484240;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495482471\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";error|N;last_activity|i:1495484539;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('38u94v9m6sl57kjretdmta4kafoi9lla', '::1', '1495483495', '__ci_last_regenerate|i:1495483433;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495482471\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('473c0899f207817e754cf442709f41dc230b3172', '192.168.8.101', '1493662114', '__ci_last_regenerate|i:1493662114;requested_page|s:0:\"\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('498a03a0e7545976d5f5172d89b8291a2d331123', '::1', '1494074349', '__ci_last_regenerate|i:1494074211;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493987078\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1494074349;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('4b1c3b7795afe728d6e3629ce17600dbe33c520c', '::1', '1493176975', '__ci_last_regenerate|i:1493176679;requested_page|s:23:\"reports/warehouse_stock\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493175753\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493176975;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('4dr2oahokc8sqclcb5mmi489lgf1ct7a', '::1', '1495483433', '__ci_last_regenerate|i:1495483433;requested_page|s:8:\"products\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('4ed024c6558e5c1f3d21da8685e3868caf1876af', '192.168.8.100', '1493665549', '__ci_last_regenerate|i:1493665316;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493662530\";last_ip|s:13:\"192.168.8.101\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";message|s:38:\"<p>You are successfully logged in.</p>\";__ci_vars|a:1:{s:7:\"message\";s:3:\"old\";}');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('4j7kbu3k3jo3arjolr8cojlv2odpk7v7', '::1', '1495694181', '__ci_last_regenerate|i:1495693883;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495693350\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;view_right|s:1:\"0\";edit_right|s:1:\"0\";allow_discount|s:1:\"0\";biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1495693813;');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('4uh3g1mcu664e3qk92ov3hs1fm0slsq7', '::1', '1495628937', '__ci_last_regenerate|i:1495628910;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495483443\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('53647034a9d4179f7ce004b09728b977901e8153', '::1', '1495691656', '__ci_last_regenerate|i:1495691656;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495690482\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('54fmmmklr9v8pvj2au1504crdkl693g1', '::1', '1495485409', '__ci_last_regenerate|i:1495485187;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495482471\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";error|N;last_activity|i:1495484539;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('55e2053f49f26b50b6a5895e87bcded6711536bc', '::1', '1493662433', '__ci_last_regenerate|i:1493662432;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493452873\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('57igotjht7c6k6tk8ooroq0j65a8ghul', '::1', '1495483928', '__ci_last_regenerate|i:1495483928;requested_page|s:0:\"\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('5d4117c5e232794800e4fc379cc685c9482fa6e8', '::1', '1493126494', '__ci_last_regenerate|i:1493126233;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493124742\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493126412;');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('615bda9587fa5b2c5cfcf1bb4a0a8343dd69f82b', '192.168.8.101', '1493661223', '__ci_last_regenerate|i:1493661223;requested_page|s:0:\"\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('61dbe2f809b92711958c549f61bbef49d54f3329', '192.168.8.100', '1493664066', '__ci_last_regenerate|i:1493664066;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493660153\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('621f88e4f489678d1465a5853c01fe2b71a003fd', '192.168.8.101', '1493660162', '__ci_last_regenerate|i:1493660162;requested_page|s:0:\"\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('63a17afde0a3e7f55300b1428ed61337d22191fb', '::1', '1493726998', '__ci_last_regenerate|i:1493726972;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493694471\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";csrfkey|s:8:\"tko7UNu5\";__ci_vars|a:2:{s:7:\"csrfkey\";s:3:\"new\";s:9:\"csrfvalue\";s:3:\"new\";}csrfvalue|s:20:\"z3Et0STendVarDwGOULQ\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('65c8f67c562fd0afcdb1d678d71d9ad56d31da3e', '::1', '1493724465', '__ci_last_regenerate|i:1493724417;requested_page|s:0:\"\";error|s:68:\"<p>You have 3 failed login attempts. Please try after 10 minutes</p>\";__ci_vars|a:1:{s:5:\"error\";s:3:\"old\";}');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('683fc332a17b473caa187a4275ace427b0fd9b21', '::1', '1493204801', '__ci_last_regenerate|i:1493204801;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493176688\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493204438;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('6864dac7b8deae50ce7296fa167210039824bfb1', '192.168.8.101', '1493661138', '__ci_last_regenerate|i:1493661138;requested_page|s:0:\"\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('6961ccfb69cd46bba20172988b2c61fcc62cc0a6', '::1', '1495482481', '__ci_last_regenerate|i:1495482454;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1494095797\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('6f45ddc7b89584f6b554fcf3b8759be3ea053204', '192.168.8.100', '1493660139', '__ci_last_regenerate|i:1493660139;requested_page|s:0:\"\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('6gtt3k1vg4hpi15fqc7me1tmccvt21ni', '::1', '1495681044', '__ci_last_regenerate|i:1495681044;');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('6lkr3k999qlm1sk4ncm7g4cofhkkdcf4', '::1', '1495693871', '__ci_last_regenerate|i:1495693576;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495693350\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;view_right|s:1:\"0\";edit_right|s:1:\"0\";allow_discount|s:1:\"0\";biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1495693813;');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('6lpslk5ji84a5f95o0oms1089cqddvoj', '::1', '1495694520', '__ci_last_regenerate|i:1495694351;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495693350\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;view_right|s:1:\"0\";edit_right|s:1:\"0\";allow_discount|s:1:\"0\";biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1495693813;');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('74c6965f73b9c05eee892d343a1ff35f7cb79c74', '192.168.8.101', '1493664086', '__ci_last_regenerate|i:1493664086;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493662498\";last_ip|s:13:\"192.168.8.100\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('74f946bb40988ad637c2a60f86a487a3b87856ba', '::1', '1493453191', '__ci_last_regenerate|i:1493453190;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493204432\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493453075;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('772d7cfd629ecc7913b0071570e851f017f2fc9c', '::1', '1493175813', '__ci_last_regenerate|i:1493175695;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493127138\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('77fe8aeaac3131ad80875450fad9880baa62a762', '::1', '1493126155', '__ci_last_regenerate|i:1493125864;requested_page|s:0:\"\";error|s:68:\"<p>You have 3 failed login attempts. Please try after 10 minutes</p>\";__ci_vars|a:1:{s:5:\"error\";s:3:\"old\";}');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('787622eb2af514ab62dca32b59a426f0080cf5fa', '::1', '1495483359', '__ci_last_regenerate|i:1495483121;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1494095797\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1495483251;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('79881d40d8abecb3d8483394e620ca63c4ee9a73', '::1', '1493726388', '__ci_last_regenerate|i:1493726270;requested_page|s:0:\"\";error|s:68:\"<p>You have 3 failed login attempts. Please try after 10 minutes</p>\";__ci_vars|a:1:{s:5:\"error\";s:3:\"old\";}');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('7ab75ada6215e82cad65f4bce089a632e03ed285', '::1', '1493694552', '__ci_last_regenerate|i:1493694463;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493694471\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493694552;');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('7d857c2068954d474e2f4add94f279d57dce164a', '::1', '1493125699', '__ci_last_regenerate|i:1493125425;requested_page|s:0:\"\";error|s:68:\"<p>You have 3 failed login attempts. Please try after 10 minutes</p>\";__ci_vars|a:1:{s:5:\"error\";s:3:\"old\";}');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('8176de1328934572c63658d080dc0ccc748b52f3', '::1', '1494075515', '__ci_last_regenerate|i:1494075515;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493987078\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1494074349;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('88c5cbfae4b458891056699c171d853021c4a85d', '::1', '1493127138', '__ci_last_regenerate|i:1493127131;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493126394\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";message|s:38:\"<p>You are successfully logged in.</p>\";__ci_vars|a:1:{s:7:\"message\";s:3:\"old\";}');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('89a4vt5bb8f110oqk64gu3g6iknnt18a', '::1', '1495692959', '__ci_last_regenerate|i:1495692802;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495690689\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;view_right|s:1:\"0\";edit_right|s:1:\"0\";allow_discount|s:1:\"0\";biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('8e7cb6ce96fb4c9c4e3aa3e024ef5ed1ea4c0694', '::1', '1493126560', '__ci_last_regenerate|i:1493126559;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493124742\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493126412;');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('97aa9303ee6bc89a2e35868336e59b546e03eccf', '::1', '1493124447', '__ci_last_regenerate|i:1493124419;identity|s:18:\"owner@tecdiary.com\";username|s:5:\"owner\";email|s:18:\"owner@tecdiary.com\";user_id|s:1:\"1\";old_last_login|s:10:\"1493114148\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";csrfkey|s:8:\"Qf4pdS39\";__ci_vars|a:2:{s:7:\"csrfkey\";s:3:\"new\";s:9:\"csrfvalue\";s:3:\"new\";}csrfvalue|s:20:\"vZOE9gaBKAoMYzPhVwcy\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('9e3248c94ba89c24054daad5341a45d5fd6c9d47', '::1', '1493204439', '__ci_last_regenerate|i:1493204424;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493176688\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493204438;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('a88r5r89vk2mn8v9s77v0mj7hlcapqs4', '::1', '1495484541', '__ci_last_regenerate|i:1495484541;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495482471\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";error|N;last_activity|i:1495484539;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('b2oeeq03pkt4qoak84u50otgojs3reoq', '::1', '1495484191', '__ci_last_regenerate|i:1495483929;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495482471\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";error|N;');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('bb3b9b1e5290bb7d815f56e6ba3716287944184c', '192.168.8.100', '1493666007', '__ci_last_regenerate|i:1493665768;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493660153\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493666007;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('bc10f14b2d9a2ae2b8b65c406bbd236058cdaec6', '192.168.8.100', '1493665915', '__ci_last_regenerate|i:1493665915;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493662530\";last_ip|s:13:\"192.168.8.101\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('bhb8bon1ef0p6arnbhk3hmq1culvniv6', '::1', '1495484853', '__ci_last_regenerate|i:1495484853;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495482471\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";error|N;last_activity|i:1495484539;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('c58f784b77fb632822f7652dc7fa62ff7618256d', '::1', '1495689778', '__ci_last_regenerate|i:1495689548;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495681034\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1495689751;');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('cfa3187eee6716da9824d4f8d5fb18558e0fae4a', '::1', '1493207300', '__ci_last_regenerate|i:1493207300;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493176688\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493204438;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('cfa4b18379dfc913139cc641a8918ebf3badd285', '::1', '1495632187', '__ci_last_regenerate|i:1495632186;');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('d3a2b14bbb8c9edec978141c2880552d97f5a49b', '::1', '1495690751', '__ci_last_regenerate|i:1495690685;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495690482\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('d5e7fa64356509477450cbb67ae0af9e98b5548b', '::1', '1493125204', '__ci_last_regenerate|i:1493124946;requested_page|s:0:\"\";error|s:68:\"<p>You have 3 failed login attempts. Please try after 10 minutes</p>\";__ci_vars|a:1:{s:5:\"error\";s:3:\"old\";}');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('dfd24c7460691f29166863e0bc8f96cd82de73ff', '::1', '1495691354', '__ci_last_regenerate|i:1495691354;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495690482\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('e1b7b1c7d792730a41c059e9898ff7571583ff3d', '::1', '1493176989', '__ci_last_regenerate|i:1493176989;requested_page|s:23:\"reports/warehouse_stock\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493175753\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493176989;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('e1hnk17bs5qf2s63j4lcm47at05akvfa', '::1', '1495715119', '__ci_last_regenerate|i:1495714974;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495697868\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;view_right|s:1:\"0\";edit_right|s:1:\"0\";allow_discount|s:1:\"0\";biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1495714442;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";message|s:29:\"Settings successfully updated\";__ci_vars|a:1:{s:7:\"message\";s:3:\"old\";}');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('e20557c8184f77f5be8df0598fa906f6a6b1a3a5', '::1', '1493987096', '__ci_last_regenerate|i:1493987054;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493726972\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493987094;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('ea5428be624c435807e30d74932dd174cd72d6a3', '::1', '1493128551', '__ci_last_regenerate|i:1493128461;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493126394\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493128551;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('f6fb855f86c9da9771d05d78017fa59ce984f818', '::1', '1494095805', '__ci_last_regenerate|i:1494095790;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1494074225\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('f860e18dbd10a0a31d9c601e1d88ffde51e47fda', '::1', '1493176231', '__ci_last_regenerate|i:1493176020;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493127138\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1493176230;');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('fa00d9fdacc8324270dbe7c3e6d6c813b0491495', '::1', '1493660156', '__ci_last_regenerate|i:1493660140;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493452873\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";message|s:38:\"<p>You are successfully logged in.</p>\";__ci_vars|a:1:{s:7:\"message\";s:3:\"old\";}');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('fba6bb876286257c0ef831665e1728d61e5c216f', '::1', '1494096367', '__ci_last_regenerate|i:1494096366;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1494074225\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('fdca6f305cc7206054d70fe477b13f9c66612e23', '::1', '1495482760', '__ci_last_regenerate|i:1495482760;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1494095797\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('fe3040df09ff1acb8afaef60536c33dcdd70b26c', '192.168.8.101', '1493666031', '__ci_last_regenerate|i:1493666031;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1493665548\";last_ip|s:13:\"192.168.8.100\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('g1uk89632dobfktak6ktde90o9pu2n6o', '::1', '1495681027', '__ci_last_regenerate|i:1495681027;requested_page|s:0:\"\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('h93t22kdbvmqjsmop25bn38pp6cb5i7m', '::1', '1495714721', '__ci_last_regenerate|i:1495714610;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495697868\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;view_right|s:1:\"0\";edit_right|s:1:\"0\";allow_discount|s:1:\"0\";biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1495714442;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('hgl2153mv0pprqd5e2suk353tu64c2j3', '::1', '1495714442', '__ci_last_regenerate|i:1495714211;requested_page|s:0:\"\";identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495697868\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;view_right|s:1:\"0\";edit_right|s:1:\"0\";allow_discount|s:1:\"0\";biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";last_activity|i:1495714442;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('ndprc8pr93sbnoo5k51hd42vhl9upgu2', '::1', '1495629562', '__ci_last_regenerate|i:1495629562;requested_page|s:0:\"\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('o295otvk78l1t6vu26jj03dtuggf83tn', '::1', '1495697883', '__ci_last_regenerate|i:1495697864;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495693582\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;view_right|s:1:\"0\";edit_right|s:1:\"0\";allow_discount|s:1:\"0\";biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('uvf81gt2pi40a77546l5amau89mlgfs5', '::1', '1495628898', '__ci_last_regenerate|i:1495628898;requested_page|s:0:\"\";');
+INSERT INTO `sma_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES ('vfvqiqaidpb0hplsql59kektj5hodnlg', '::1', '1495485519', '__ci_last_regenerate|i:1495485519;identity|s:15:\"imran@imran.xyz\";username|s:5:\"owner\";email|s:15:\"imran@imran.xyz\";user_id|s:1:\"1\";old_last_login|s:10:\"1495482471\";last_ip|s:3:\"::1\";avatar|N;gender|s:4:\"male\";group_id|s:1:\"1\";warehouse_id|N;biller_id|N;company_id|N;show_cost|s:1:\"0\";show_price|s:1:\"0\";error|N;last_activity|i:1495484539;register_id|s:1:\"1\";cash_in_hand|s:11:\"100000.0000\";register_open_time|s:19:\"2017-04-25 12:03:20\";');
+
+
+#
+# TABLE STRUCTURE FOR: sma_settings
+#
+
+DROP TABLE IF EXISTS `sma_settings`;
+
+CREATE TABLE `sma_settings` (
+  `setting_id` int(1) NOT NULL,
+  `logo` varchar(255) NOT NULL,
+  `logo2` varchar(255) NOT NULL,
+  `site_name` varchar(55) NOT NULL,
+  `language` varchar(20) NOT NULL,
+  `default_warehouse` int(2) NOT NULL,
+  `accounting_method` tinyint(4) NOT NULL DEFAULT '0',
+  `default_currency` varchar(3) NOT NULL,
+  `default_tax_rate` int(2) NOT NULL,
+  `rows_per_page` int(2) NOT NULL,
+  `version` varchar(10) NOT NULL DEFAULT '1.0',
+  `default_tax_rate2` int(11) NOT NULL DEFAULT '0',
+  `dateformat` int(11) NOT NULL,
+  `sales_prefix` varchar(20) DEFAULT NULL,
+  `quote_prefix` varchar(20) DEFAULT NULL,
+  `purchase_prefix` varchar(20) DEFAULT NULL,
+  `transfer_prefix` varchar(20) DEFAULT NULL,
+  `delivery_prefix` varchar(20) DEFAULT NULL,
+  `payment_prefix` varchar(20) DEFAULT NULL,
+  `return_prefix` varchar(20) DEFAULT NULL,
+  `expense_prefix` varchar(20) DEFAULT NULL,
+  `item_addition` tinyint(1) NOT NULL DEFAULT '0',
+  `theme` varchar(20) NOT NULL,
+  `product_serial` tinyint(4) NOT NULL,
+  `default_discount` int(11) NOT NULL,
+  `product_discount` tinyint(1) NOT NULL DEFAULT '0',
+  `discount_method` tinyint(4) NOT NULL,
+  `tax1` tinyint(4) NOT NULL,
+  `tax2` tinyint(4) NOT NULL,
+  `overselling` tinyint(1) NOT NULL DEFAULT '0',
+  `restrict_user` tinyint(4) NOT NULL DEFAULT '0',
+  `restrict_calendar` tinyint(4) NOT NULL DEFAULT '0',
+  `timezone` varchar(100) DEFAULT NULL,
+  `iwidth` int(11) NOT NULL DEFAULT '0',
+  `iheight` int(11) NOT NULL,
+  `twidth` int(11) NOT NULL,
+  `theight` int(11) NOT NULL,
+  `watermark` tinyint(1) DEFAULT NULL,
+  `reg_ver` tinyint(1) DEFAULT NULL,
+  `allow_reg` tinyint(1) DEFAULT NULL,
+  `reg_notification` tinyint(1) DEFAULT NULL,
+  `auto_reg` tinyint(1) DEFAULT NULL,
+  `protocol` varchar(20) NOT NULL DEFAULT 'mail',
+  `mailpath` varchar(55) DEFAULT '/usr/sbin/sendmail',
+  `smtp_host` varchar(100) DEFAULT NULL,
+  `smtp_user` varchar(100) DEFAULT NULL,
+  `smtp_pass` varchar(255) DEFAULT NULL,
+  `smtp_port` varchar(10) DEFAULT '25',
+  `smtp_crypto` varchar(10) DEFAULT NULL,
+  `corn` datetime DEFAULT NULL,
+  `customer_group` int(11) NOT NULL,
+  `default_email` varchar(100) NOT NULL,
+  `mmode` tinyint(1) NOT NULL,
+  `bc_fix` tinyint(4) NOT NULL DEFAULT '0',
+  `auto_detect_barcode` tinyint(1) NOT NULL DEFAULT '0',
+  `captcha` tinyint(1) NOT NULL DEFAULT '1',
+  `reference_format` tinyint(1) NOT NULL DEFAULT '1',
+  `racks` tinyint(1) DEFAULT '0',
+  `attributes` tinyint(1) NOT NULL DEFAULT '0',
+  `product_expiry` tinyint(1) NOT NULL DEFAULT '0',
+  `decimals` tinyint(2) NOT NULL DEFAULT '2',
+  `decimals_sep` varchar(2) NOT NULL DEFAULT '.',
+  `thousands_sep` varchar(2) NOT NULL DEFAULT ',',
+  `invoice_view` tinyint(1) DEFAULT '0',
+  `default_biller` int(11) DEFAULT NULL,
+  `envato_username` varchar(50) DEFAULT NULL,
+  `purchase_code` varchar(100) DEFAULT NULL,
+  `rtl` tinyint(1) DEFAULT '0',
+  `each_spent` decimal(15,4) DEFAULT NULL,
+  `ca_point` tinyint(4) DEFAULT NULL,
+  `each_sale` decimal(15,4) DEFAULT NULL,
+  `sa_point` tinyint(4) DEFAULT NULL,
+  `update` tinyint(1) DEFAULT '0',
+  `sac` tinyint(1) DEFAULT '0',
+  `set_focus` tinyint(1) NOT NULL DEFAULT '0',
+  `qty_decimals` tinyint(1) DEFAULT '2',
+  `display_all_products` tinyint(1) DEFAULT '0',
+  `display_symbol` tinyint(1) DEFAULT NULL,
+  `symbol` varchar(50) DEFAULT NULL,
+  `remove_expired` tinyint(1) DEFAULT '0',
+  `barcode_separator` varchar(2) NOT NULL DEFAULT '_',
+  `returnp_prefix` varchar(20) DEFAULT NULL,
+  `price_group` int(11) DEFAULT NULL,
+  `barcode_img` tinyint(1) NOT NULL DEFAULT '1',
+  `ppayment_prefix` varchar(20) DEFAULT 'POP',
+  `disable_editing` smallint(6) DEFAULT '90',
+  `qa_prefix` varchar(55) DEFAULT NULL,
+  `update_cost` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`setting_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_settings` (`setting_id`, `logo`, `logo2`, `site_name`, `language`, `default_warehouse`, `accounting_method`, `default_currency`, `default_tax_rate`, `rows_per_page`, `version`, `default_tax_rate2`, `dateformat`, `sales_prefix`, `quote_prefix`, `purchase_prefix`, `transfer_prefix`, `delivery_prefix`, `payment_prefix`, `return_prefix`, `expense_prefix`, `item_addition`, `theme`, `product_serial`, `default_discount`, `product_discount`, `discount_method`, `tax1`, `tax2`, `overselling`, `restrict_user`, `restrict_calendar`, `timezone`, `iwidth`, `iheight`, `twidth`, `theight`, `watermark`, `reg_ver`, `allow_reg`, `reg_notification`, `auto_reg`, `protocol`, `mailpath`, `smtp_host`, `smtp_user`, `smtp_pass`, `smtp_port`, `smtp_crypto`, `corn`, `customer_group`, `default_email`, `mmode`, `bc_fix`, `auto_detect_barcode`, `captcha`, `reference_format`, `racks`, `attributes`, `product_expiry`, `decimals`, `decimals_sep`, `thousands_sep`, `invoice_view`, `default_biller`, `envato_username`, `purchase_code`, `rtl`, `each_spent`, `ca_point`, `each_sale`, `sa_point`, `update`, `sac`, `set_focus`, `qty_decimals`, `display_all_products`, `display_symbol`, `symbol`, `remove_expired`, `barcode_separator`, `returnp_prefix`, `price_group`, `barcode_img`, `ppayment_prefix`, `disable_editing`, `qa_prefix`, `update_cost`) VALUES ('1', 'logo2.png', 'ali_center.png', 'ali center', 'english', '2', '0', 'PKR', '0', '10', '3.0.2.23', '1', '1', 'SALE', 'QUOTE', 'PO', 'TR', 'DO', 'IPAY', 'RETURNSL', '', '0', 'default', '1', '1', '1', '1', '0', '1', '0', '1', '0', 'Asia/Karachi', '800', '800', '60', '60', '0', '0', '0', '0', NULL, 'mail', '/usr/sbin/sendmail', 'pop.gmail.com', 'contact@tecdiary.com', 'jEFTM4T63AiQ9dsidxhPKt9CIg4HQjCN58n/RW9vmdC/UDXCzRLR469ziZ0jjpFlbOg43LyoSmpJLBkcAHh0Yw==', '25', NULL, NULL, '1', 'imran@imran.xyz', '0', '4', '1', '0', '2', '0', '0', '0', '2', '.', ',', '0', '3', 'adminmail@mail.com', '99939933fdfsd', '0', NULL, NULL, NULL, NULL, '0', '0', '0', '2', '0', '0', '', '0', '_', '', '1', '0', '', '0', '', '0');
+
+
+#
+# TABLE STRUCTURE FOR: sma_skrill
+#
+
+DROP TABLE IF EXISTS `sma_skrill`;
+
+CREATE TABLE `sma_skrill` (
+  `id` int(11) NOT NULL,
+  `active` tinyint(4) NOT NULL,
+  `account_email` varchar(255) NOT NULL DEFAULT 'testaccount2@moneybookers.com',
+  `secret_word` varchar(20) NOT NULL DEFAULT 'mbtest',
+  `skrill_currency` varchar(3) NOT NULL DEFAULT 'USD',
+  `fixed_charges` decimal(25,4) NOT NULL DEFAULT '0.0000',
+  `extra_charges_my` decimal(25,4) NOT NULL DEFAULT '0.0000',
+  `extra_charges_other` decimal(25,4) NOT NULL DEFAULT '0.0000',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_skrill` (`id`, `active`, `account_email`, `secret_word`, `skrill_currency`, `fixed_charges`, `extra_charges_my`, `extra_charges_other`) VALUES ('1', '1', 'isoftjhang', 'mbtest', 'USD', '0.0000', '0.0000', '0.0000');
+
+
+#
+# TABLE STRUCTURE FOR: sma_stock_count_items
+#
+
+DROP TABLE IF EXISTS `sma_stock_count_items`;
+
+CREATE TABLE `sma_stock_count_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `stock_count_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_code` varchar(50) DEFAULT NULL,
+  `product_name` varchar(255) DEFAULT NULL,
+  `product_variant` varchar(55) DEFAULT NULL,
+  `product_variant_id` int(11) DEFAULT NULL,
+  `expected` decimal(15,4) NOT NULL,
+  `counted` decimal(15,4) NOT NULL,
+  `cost` decimal(25,4) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `stock_count_id` (`stock_count_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_stock_counts
+#
+
+DROP TABLE IF EXISTS `sma_stock_counts`;
+
+CREATE TABLE `sma_stock_counts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `reference_no` varchar(55) NOT NULL,
+  `warehouse_id` int(11) NOT NULL,
+  `type` varchar(10) NOT NULL,
+  `initial_file` varchar(50) NOT NULL,
+  `final_file` varchar(50) DEFAULT NULL,
+  `brands` varchar(50) DEFAULT NULL,
+  `brand_names` varchar(100) DEFAULT NULL,
+  `categories` varchar(50) DEFAULT NULL,
+  `category_names` varchar(100) DEFAULT NULL,
+  `note` text,
+  `products` int(11) DEFAULT NULL,
+  `rows` int(11) DEFAULT NULL,
+  `differences` int(11) DEFAULT NULL,
+  `matches` int(11) DEFAULT NULL,
+  `missing` int(11) DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `finalized` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `warehouse_id` (`warehouse_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_subcategories
+#
+
+DROP TABLE IF EXISTS `sma_subcategories`;
+
+CREATE TABLE `sma_subcategories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_id` int(11) NOT NULL,
+  `code` varchar(55) NOT NULL,
+  `name` varchar(55) NOT NULL,
+  `image` varchar(55) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_subcategories` (`id`, `category_id`, `code`, `name`, `image`) VALUES ('1', '1', 'dsd', 'sds', NULL);
+
+
+#
+# TABLE STRUCTURE FOR: sma_suspended_bills
+#
+
+DROP TABLE IF EXISTS `sma_suspended_bills`;
+
+CREATE TABLE `sma_suspended_bills` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `customer_id` int(11) NOT NULL,
+  `customer` varchar(55) DEFAULT NULL,
+  `count` int(11) NOT NULL,
+  `order_discount_id` varchar(20) DEFAULT NULL,
+  `order_tax_id` int(11) DEFAULT NULL,
+  `total` decimal(25,4) NOT NULL,
+  `biller_id` int(11) DEFAULT NULL,
+  `warehouse_id` int(11) DEFAULT NULL,
+  `created_by` int(11) NOT NULL,
+  `suspend_note` varchar(255) DEFAULT NULL,
+  `shipping` decimal(15,4) DEFAULT '0.0000',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_suspended_items
+#
+
+DROP TABLE IF EXISTS `sma_suspended_items`;
+
+CREATE TABLE `sma_suspended_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `suspend_id` int(11) unsigned NOT NULL,
+  `product_id` int(11) unsigned NOT NULL,
+  `product_code` varchar(55) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `net_unit_price` decimal(25,4) NOT NULL,
+  `unit_price` decimal(25,4) NOT NULL,
+  `quantity` decimal(15,4) DEFAULT '0.0000',
+  `warehouse_id` int(11) DEFAULT NULL,
+  `item_tax` decimal(25,4) DEFAULT NULL,
+  `tax_rate_id` int(11) DEFAULT NULL,
+  `tax` varchar(55) DEFAULT NULL,
+  `discount` varchar(55) DEFAULT NULL,
+  `item_discount` decimal(25,4) DEFAULT NULL,
+  `subtotal` decimal(25,4) NOT NULL,
+  `serial_no` varchar(255) DEFAULT NULL,
+  `option_id` int(11) DEFAULT NULL,
+  `product_type` varchar(20) DEFAULT NULL,
+  `real_unit_price` decimal(25,4) DEFAULT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  `product_unit_id` int(11) DEFAULT NULL,
+  `product_unit_code` varchar(10) DEFAULT NULL,
+  `unit_quantity` decimal(15,4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_tax_rates
+#
+
+DROP TABLE IF EXISTS `sma_tax_rates`;
+
+CREATE TABLE `sma_tax_rates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(55) NOT NULL,
+  `code` varchar(10) DEFAULT NULL,
+  `rate` decimal(12,4) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_tax_rates` (`id`, `name`, `code`, `rate`, `type`) VALUES ('1', 'No Tax', 'NT', '0.0000', '2');
+INSERT INTO `sma_tax_rates` (`id`, `name`, `code`, `rate`, `type`) VALUES ('2', 'VAT @10%', 'VAT10', '10.0000', '1');
+INSERT INTO `sma_tax_rates` (`id`, `name`, `code`, `rate`, `type`) VALUES ('3', 'GST @6%', 'GST', '6.0000', '1');
+INSERT INTO `sma_tax_rates` (`id`, `name`, `code`, `rate`, `type`) VALUES ('4', 'VAT @20%', 'VT20', '20.0000', '1');
+
+
+#
+# TABLE STRUCTURE FOR: sma_transfer_items
+#
+
+DROP TABLE IF EXISTS `sma_transfer_items`;
+
+CREATE TABLE `sma_transfer_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `transfer_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_code` varchar(55) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `option_id` int(11) DEFAULT NULL,
+  `expiry` date DEFAULT NULL,
+  `quantity` decimal(15,4) NOT NULL,
+  `tax_rate_id` int(11) DEFAULT NULL,
+  `tax` varchar(55) DEFAULT NULL,
+  `item_tax` decimal(25,4) DEFAULT NULL,
+  `net_unit_cost` decimal(25,4) DEFAULT NULL,
+  `subtotal` decimal(25,4) DEFAULT NULL,
+  `quantity_balance` decimal(15,4) NOT NULL,
+  `unit_cost` decimal(25,4) DEFAULT NULL,
+  `real_unit_cost` decimal(25,4) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `product_unit_id` int(11) DEFAULT NULL,
+  `product_unit_code` varchar(10) DEFAULT NULL,
+  `unit_quantity` decimal(15,4) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `transfer_id` (`transfer_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_transfers
+#
+
+DROP TABLE IF EXISTS `sma_transfers`;
+
+CREATE TABLE `sma_transfers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `transfer_no` varchar(55) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `from_warehouse_id` int(11) NOT NULL,
+  `from_warehouse_code` varchar(55) NOT NULL,
+  `from_warehouse_name` varchar(55) NOT NULL,
+  `to_warehouse_id` int(11) NOT NULL,
+  `to_warehouse_code` varchar(55) NOT NULL,
+  `to_warehouse_name` varchar(55) NOT NULL,
+  `note` varchar(1000) DEFAULT NULL,
+  `total` decimal(25,4) DEFAULT NULL,
+  `total_tax` decimal(25,4) DEFAULT NULL,
+  `grand_total` decimal(25,4) DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `status` varchar(55) NOT NULL DEFAULT 'pending',
+  `shipping` decimal(25,4) NOT NULL DEFAULT '0.0000',
+  `attachment` varchar(55) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_units
+#
+
+DROP TABLE IF EXISTS `sma_units`;
+
+CREATE TABLE `sma_units` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(10) NOT NULL,
+  `name` varchar(55) NOT NULL,
+  `base_unit` int(11) DEFAULT NULL,
+  `operator` varchar(1) DEFAULT NULL,
+  `unit_value` varchar(55) DEFAULT NULL,
+  `operation_value` varchar(55) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `base_unit` (`base_unit`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_units` (`id`, `code`, `name`, `base_unit`, `operator`, `unit_value`, `operation_value`) VALUES ('1', 'pc', 'Piece', NULL, NULL, NULL, NULL);
+
+
+#
+# TABLE STRUCTURE FOR: sma_user_logins
+#
+
+DROP TABLE IF EXISTS `sma_user_logins`;
+
+CREATE TABLE `sma_user_logins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `company_id` int(11) DEFAULT NULL,
+  `ip_address` varbinary(16) NOT NULL,
+  `login` varchar(100) NOT NULL,
+  `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('4', '1', NULL, '::1', 'imran@imran.xyz', '2017-04-25 18:19:54');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('5', '3', NULL, '::1', 'admin@imran.xyz', '2017-04-25 18:31:08');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('6', '2', NULL, '::1', 'sales@imran.xyz', '2017-04-25 18:31:52');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('7', '1', NULL, '::1', 'imran@imran.xyz', '2017-04-25 18:32:18');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('8', '1', NULL, '::1', 'imran@imran.xyz', '2017-04-26 08:02:33');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('9', '1', NULL, '::1', 'imran@imran.xyz', '2017-04-26 08:18:08');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('10', '1', NULL, '::1', 'imran@imran.xyz', '2017-04-26 16:00:32');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('11', '1', NULL, '::1', 'imran@imran.xyz', '2017-04-29 13:01:13');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('12', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-01 22:35:53');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('13', '1', NULL, '192.168.8.100', 'imran@imran.xyz', '2017-05-01 23:14:58');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('14', '1', NULL, '192.168.8.101', 'Imran@imran.xyz', '2017-05-01 23:15:31');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('15', '1', NULL, '192.168.8.100', 'imran@imran.xyz', '2017-05-02 00:05:49');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('16', '1', NULL, '192.168.8.101', 'Imran@imran.xyz', '2017-05-02 00:08:37');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('17', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-02 08:07:50');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('18', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-02 08:07:51');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('19', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-02 08:07:51');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('20', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-02 17:09:32');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('21', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-05 17:24:38');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('22', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-06 17:37:05');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('23', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-06 23:36:37');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('24', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-23 00:47:51');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('25', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-23 01:04:03');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('26', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-24 17:28:38');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('27', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-25 07:57:14');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('28', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-25 10:19:15');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('29', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-25 10:27:52');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('30', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-25 10:28:35');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('31', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-25 10:32:18');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('32', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-25 10:34:42');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('33', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-25 10:38:10');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('34', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-25 11:13:31');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('35', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-25 11:20:12');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('36', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-25 11:22:30');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('37', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-25 11:26:22');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('38', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-25 12:37:48');
+INSERT INTO `sma_user_logins` (`id`, `user_id`, `company_id`, `ip_address`, `login`, `time`) VALUES ('39', '1', NULL, '::1', 'imran@imran.xyz', '2017-05-25 17:10:18');
+
+
+#
+# TABLE STRUCTURE FOR: sma_users
+#
+
+DROP TABLE IF EXISTS `sma_users`;
+
+CREATE TABLE `sma_users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `last_ip_address` varbinary(45) DEFAULT NULL,
+  `ip_address` varbinary(45) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(40) NOT NULL,
+  `salt` varchar(40) DEFAULT NULL,
+  `email` varchar(100) NOT NULL,
+  `activation_code` varchar(40) DEFAULT NULL,
+  `forgotten_password_code` varchar(40) DEFAULT NULL,
+  `forgotten_password_time` int(11) unsigned DEFAULT NULL,
+  `remember_code` varchar(40) DEFAULT NULL,
+  `created_on` int(11) unsigned NOT NULL,
+  `last_login` int(11) unsigned DEFAULT NULL,
+  `active` tinyint(1) unsigned DEFAULT NULL,
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `company` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `avatar` varchar(55) DEFAULT NULL,
+  `gender` varchar(20) DEFAULT NULL,
+  `group_id` int(10) unsigned NOT NULL,
+  `warehouse_id` int(10) unsigned DEFAULT NULL,
+  `biller_id` int(10) unsigned DEFAULT NULL,
+  `company_id` int(11) DEFAULT NULL,
+  `show_cost` tinyint(1) DEFAULT '0',
+  `show_price` tinyint(1) DEFAULT '0',
+  `award_points` int(11) DEFAULT '0',
+  `view_right` tinyint(1) NOT NULL DEFAULT '0',
+  `edit_right` tinyint(1) NOT NULL DEFAULT '0',
+  `allow_discount` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `group_id` (`group_id`,`warehouse_id`,`biller_id`),
+  KEY `group_id_2` (`group_id`,`company_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_users` (`id`, `last_ip_address`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `avatar`, `gender`, `group_id`, `warehouse_id`, `biller_id`, `company_id`, `show_cost`, `show_price`, `award_points`, `view_right`, `edit_right`, `allow_discount`) VALUES ('1', '::1', '\0\0', 'owner', '2c8ab736b2ccab4f50e72d5fd7d21020cbb77ae7', NULL, 'imran@imran.xyz', NULL, '57ec707d5e235654a57daed3abe644b5243bd909', '1493125064', NULL, '1351661704', '1495714218', '1', 'Owner', 'Owner', 'Ali Center', '012345678', NULL, 'male', '1', NULL, NULL, NULL, '0', '0', '0', '0', '0', '0');
+INSERT INTO `sma_users` (`id`, `last_ip_address`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `avatar`, `gender`, `group_id`, `warehouse_id`, `biller_id`, `company_id`, `show_cost`, `show_price`, `award_points`, `view_right`, `edit_right`, `allow_discount`) VALUES ('2', '::1', '::1', 'salesman', '0a1ef6c40df8592ac6456cd3b14a8021459e02ab', NULL, 'sales@imran.xyz', NULL, NULL, NULL, NULL, '1493126993', '1493127111', '1', 'sales', 'man', 'Ali Center Jhang', '8884', NULL, 'male', '5', '2', '3', NULL, '0', '0', '0', '0', '0', '0');
+INSERT INTO `sma_users` (`id`, `last_ip_address`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `avatar`, `gender`, `group_id`, `warehouse_id`, `biller_id`, `company_id`, `show_cost`, `show_price`, `award_points`, `view_right`, `edit_right`, `allow_discount`) VALUES ('3', '::1', '::1', 'admin', 'be2e1fd4ca4b4bcd0d6f02caf3b77f1a7444f487', NULL, 'admin@imran.xyz', NULL, NULL, NULL, NULL, '1493127047', '1493127068', '1', 'admin', 'panel', 'Ali Center Jhang', '234343', NULL, 'male', '2', '0', '3', NULL, '0', '0', '0', '0', '0', '0');
+
+
+#
+# TABLE STRUCTURE FOR: sma_variants
+#
+
+DROP TABLE IF EXISTS `sma_variants`;
+
+CREATE TABLE `sma_variants` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(55) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#
+# TABLE STRUCTURE FOR: sma_warehouses
+#
+
+DROP TABLE IF EXISTS `sma_warehouses`;
+
+CREATE TABLE `sma_warehouses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(50) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `map` varchar(255) DEFAULT NULL,
+  `phone` varchar(55) DEFAULT NULL,
+  `email` varchar(55) DEFAULT NULL,
+  `price_group_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_warehouses` (`id`, `code`, `name`, `address`, `map`, `phone`, `email`, `price_group_id`) VALUES ('2', 'Origin', 'Origin Main', '<p>Church Road Jhang</p>', NULL, '0105292122', 'imran@imran.xyz', NULL);
+
+
+#
+# TABLE STRUCTURE FOR: sma_warehouses_products
+#
+
+DROP TABLE IF EXISTS `sma_warehouses_products`;
+
+CREATE TABLE `sma_warehouses_products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `warehouse_id` int(11) NOT NULL,
+  `quantity` decimal(15,4) NOT NULL,
+  `rack` varchar(55) DEFAULT NULL,
+  `avg_cost` decimal(25,4) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  KEY `warehouse_id` (`warehouse_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `sma_warehouses_products` (`id`, `product_id`, `warehouse_id`, `quantity`, `rack`, `avg_cost`) VALUES ('1', '1', '2', '3.5000', NULL, '788.0000');
+
+
+#
+# TABLE STRUCTURE FOR: sma_warehouses_products_variants
+#
+
+DROP TABLE IF EXISTS `sma_warehouses_products_variants`;
+
+CREATE TABLE `sma_warehouses_products_variants` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `option_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `warehouse_id` int(11) NOT NULL,
+  `quantity` decimal(15,4) NOT NULL,
+  `rack` varchar(55) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `option_id` (`option_id`),
+  KEY `product_id` (`product_id`),
+  KEY `warehouse_id` (`warehouse_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
